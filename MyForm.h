@@ -243,7 +243,13 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	con->Open();
 	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='"+this->textBoxUNAME->Text+"' AND user_password='"+this->textBoxPWORD->Text+"';", con);
 	cmd->ExecuteNonQuery();
-	SqlDataReader ^ rd = cmd->ExecuteReader();
+	SqlDataReader^ rd = cmd->ExecuteReader();
+	/* 
+	//reads values from a database columna as 64bit signed int
+	while (rd->Read())
+		__int64 id = rd->GetInt64(0);
+	rd->Close(); 
+	*/
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
 		con->Close();
