@@ -245,7 +245,7 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	cmd->ExecuteNonQuery();
 	SqlDataReader^ rd = cmd->ExecuteReader();
 	/* 
-	//reads values from a database columna as 64bit signed int
+	//reads values from a database column as 64bit signed int
 	while (rd->Read())
 		__int64 id = rd->GetInt64(0);
 	rd->Close(); 
