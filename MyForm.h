@@ -109,6 +109,7 @@ namespace GUIpractice {
 			this->buttonLogin->TabIndex = 0;
 			this->buttonLogin->Text = L"Login";
 			this->buttonLogin->UseVisualStyleBackColor = true;
+			this->buttonLogin->Click += gcnew System::EventHandler(this, &MyForm::buttonLogin_Click);
 			// 
 			// buttonForPas
 			// 
@@ -159,6 +160,7 @@ namespace GUIpractice {
 			this->textBoxPWORD->Name = L"textBoxPWORD";
 			this->textBoxPWORD->Size = System::Drawing::Size(127, 20);
 			this->textBoxPWORD->TabIndex = 5;
+			this->textBoxPWORD->TextChanged += gcnew System::EventHandler(this, &MyForm::textBoxPWORD_TextChanged);
 			// 
 			// buttonRegi
 			// 
@@ -185,25 +187,12 @@ namespace GUIpractice {
 			this->Controls->Add(this->buttonLogin);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-		/*
-		private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-			con.Open();
-			SqlCommand cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + textBoxUNAME::Text + "' AND user_password='" + textBoxPWORD::Text + "'", con);
-			SqlDataReader rd = cmd::ExecuteReader();
-			if (rd.HasRows) {
-				MessageBox::Show("Connected to Database");
-				con.Close();
-			}
-			else {
-				MessageBox::Show("Error. Connection Faild");
-				con.Close();
-			}
-			*/
 
 
 
@@ -224,8 +213,9 @@ private: System::Void Label1_Click(System::Object^ sender, System::EventArgs^ e)
 
 
 private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	Forgot_Password^ forogtPWordForm = gcnew Forgot_Password;
-	forogtPWordForm->Show();
+	this->Hide(); //hide current form
+	Forgot_Password^ forgotPWordForm = gcnew Forgot_Password;
+	forgotPWordForm->ShowDialog();
 	
 	
 
@@ -238,8 +228,31 @@ private: System::Void TextBox1_TextChanged(System::Object^ sender, System::Event
 private: System::Void Label2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs^ e) {
-	Register_Form^ rform = gcnew Register_Form;
-	rform->Show();
+	this->Hide(); //hide current form
+	Register_Form^ rform = gcnew Register_Form();
+	rform->ShowDialog(); //open register form
+}
+private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {
+	//connection to db upon click
+	/*
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=***********");
+	con.Open();
+	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + textBoxUNAME->Text + "' AND user_password='" + textBoxPWORD->Text + "'", con);
+	SqlDataReader ^ rd = cmd.ExecuteReader();
+	if (rd.HasRows) {
+		MessageBox::Show("Connected to Database");
+		con.Close();
+	}
+	else {
+		MessageBox::Show("Error. Connection Faild");
+		con.Close();
+	}*/
+}
+private: System::Void textBoxPWORD_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+
+
 }
 };
 }
