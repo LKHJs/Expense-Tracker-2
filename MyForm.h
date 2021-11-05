@@ -24,6 +24,10 @@ namespace GUIpractice {
 			//
 			//TODO: Add the constructor code here
 			//
+			//hide password text in text field and replace with asteriks for security reasons
+			textBoxPWORD->PasswordChar = '*';
+			//max password characters in text field
+			textBoxPWORD->MaxLength = 25;
 		}
 
 	protected:
@@ -234,19 +238,20 @@ private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs
 }
 private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {
 	//connection to db upon click
-	/*
-	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=***********");
-	con.Open();
-	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + textBoxUNAME->Text + "' AND user_password='" + textBoxPWORD->Text + "'", con);
-	SqlDataReader ^ rd = cmd.ExecuteReader();
-	if (rd.HasRows) {
-		MessageBox::Show("Connected to Database");
-		con.Close();
+	
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='"+this->textBoxUNAME->Text+"' AND user_password='"+this->textBoxPWORD->Text+"';", con);
+	cmd->ExecuteNonQuery();
+	SqlDataReader ^ rd = cmd->ExecuteReader();
+	if (rd->HasRows) {
+		MessageBox::Show("Login Successful");
+		con->Close();
 	}
 	else {
-		MessageBox::Show("Error. Connection Faild");
-		con.Close();
-	}*/
+		MessageBox::Show("Error. Query Connection Failed");
+		con->Close();
+	}
 }
 private: System::Void textBoxPWORD_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
