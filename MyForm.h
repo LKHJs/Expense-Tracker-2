@@ -25,6 +25,7 @@ namespace GUIpractice {
 			//
 			//TODO: Add the constructor code here
 			//
+
 			//hide password text in text field and replace with asteriks for security reasons
 			textBoxPWORD->PasswordChar = '*';
 			//max password characters in text field
@@ -242,6 +243,7 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
+	//create query for login credential verification
 	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='"+this->textBoxUNAME->Text+"' AND user_password='"+this->textBoxPWORD->Text+"';", con);
 	cmd->ExecuteNonQuery();
 	SqlDataReader^ rd = cmd->ExecuteReader();
@@ -251,15 +253,17 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		__int64 id = rd->GetInt64(0);
 	rd->Close(); 
 	*/
+	//upon successful verification do the following
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
+		//System::String^ newguid = 
 		this->Hide(); //hide current form
 		MainHub^ mainHubForm = gcnew MainHub;
 		mainHubForm->ShowDialog();
-		con->Close();
+		//con->Close();
 	}
 	else {
-		MessageBox::Show("Error. Query Connection Failed");
+		MessageBox::Show("Error. Login Attempt Failed");
 		con->Close();
 	}
 }

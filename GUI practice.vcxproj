@@ -159,6 +159,9 @@
     <EmbeddedResource Include="Forgot_Password.resx">
       <DependentUpon>Forgot_Password.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainHub.resx">
+      <DependentUpon>MainHub.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MyForm.resx">
       <DependentUpon>MyForm.h</DependentUpon>
     </EmbeddedResource>
