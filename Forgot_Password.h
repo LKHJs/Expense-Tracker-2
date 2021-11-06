@@ -260,6 +260,8 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		SqlDataReader^ rd = cmd->ExecuteReader();
 		if (rd->RecordsAffected) {
 			MessageBox::Show("Password Changed Succsessfully", "Success", MessageBoxButtons::OK);
+			Form::Close();
+			rd->Close();
 			con->Close();
 		}
 		else {

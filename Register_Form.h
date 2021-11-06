@@ -218,28 +218,35 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 	private: System::Void button_Create_Click(System::Object^ sender, System::EventArgs^ e) {
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
+
 		//check if username exists
-		if (SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con)) {
+		SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con);
+		uniqueUSRCHECK->ExecuteNonQuery();
+		SqlDataReader^ usrCheck = uniqueUSRCHECK->ExecuteReader();
+		if (usrCheck->HasRows) {
 			MessageBox::Show("Username Already exists! Please Try Again.");
 			con->Close();
+			
 		}
 		//otherwise proceed with connection and query calls
 		else {
+			usrCheck->Close(); //close previous datareader from usercheck
 			SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
 			cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
 			cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
 			cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
 			cmd->ExecuteNonQuery();
 			SqlDataReader^ rd = cmd->ExecuteReader();
-			if (SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con)) {
-				MessageBox::Show("Username Already exists! Please Try Again.");
-				con->Close();
-			}
-			else if (rd->RecordsAffected) {
+			//if registration is successful
+			if (rd->RecordsAffected) {
 				MessageBox::Show("Registration Successful!");
+				//transition back to login form
+				Form::Close();
+				rd->Close();
 				con->Close();
 			}
 			else {
+				//if query or connection fail
 				MessageBox::Show("Error. Query Connection Failed");
 				con->Close();
 			}

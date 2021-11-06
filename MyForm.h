@@ -222,7 +222,7 @@ private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e
 	this->Hide(); //hide current form
 	//declare new form and display
 	Forgot_Password^ forgotPWordForm = gcnew Forgot_Password;
-	forgotPWordForm->ShowDialog();
+	forgotPWordForm->Show();
 	
 	
 
@@ -237,7 +237,7 @@ private: System::Void Label2_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide(); //hide current form
 	Register_Form^ rform = gcnew Register_Form();
-	rform->ShowDialog(); //open register form
+	rform->Show(); //open register form
 }
 private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {
 	//connection to db upon click
@@ -248,12 +248,7 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='"+this->textBoxUNAME->Text+"' AND user_password='"+this->textBoxPWORD->Text+"';", con);
 	cmd->ExecuteNonQuery();
 	SqlDataReader^ rd = cmd->ExecuteReader();
-	/* 
-	//reads values from a database column as 64bit signed int
-	while (rd->Read())
-		__int64 id = rd->GetInt64(0);
-	rd->Close(); 
-	*/
+
 	//upon successful verification do the following
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
@@ -261,10 +256,12 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		this->Hide(); //hide current form
 		MainHub^ mainHubForm = gcnew MainHub;
 		mainHubForm->ShowDialog();
+		rd->Close();
 		con->Close();
 	}
 	else {
 		MessageBox::Show("Error. Login Attempt Failed");
+		rd->Close();
 		con->Close();
 	}
 }
