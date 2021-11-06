@@ -217,7 +217,11 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 private: System::Void button_Create_Click(System::Object^ sender, System::EventArgs^ e) {
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
-	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user (user_name, user_password, security_answer) VALUES ('"+ this->textBox1->Text + ", '" + this->textBox2->Text + "', '"+this->textBox4+"');", con);
+	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
+	cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
+	if ()
+	cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
+	cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
 	cmd->ExecuteNonQuery();
 	SqlDataReader^ rd = cmd->ExecuteReader();
 	if (rd->RecordsAffected) {
