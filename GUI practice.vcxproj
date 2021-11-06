@@ -137,11 +137,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Forgot_Password.cpp" />
+    <ClCompile Include="MainHub.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="Register_Form.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Forgot_Password.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="MainHub.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MyForm.h">
