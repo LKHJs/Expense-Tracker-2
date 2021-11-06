@@ -16,13 +16,17 @@ namespace GUIpractice {
 	public ref class Register_Form : public System::Windows::Forms::Form
 	{
 	public:
+		
 		Register_Form(void)
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
+			//
+			
 		}
+	private: System::Windows::Forms::Form^ otherform;
 
 	protected:
 		/// <summary>
@@ -212,6 +216,8 @@ namespace GUIpractice {
 	}
 private: System::Void Button_Cancle_Click(System::Object^ sender, System::EventArgs^ e) {
 	Form::Close();
+;
+
 }
 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -248,8 +254,10 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 			else {
 				//if query or connection fail
 				MessageBox::Show("Error. Query Connection Failed");
+				rd->Close();
 				con->Close();
 			}
+			rd->Close();
 		}
 }
 };

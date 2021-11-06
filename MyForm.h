@@ -25,13 +25,14 @@ namespace GUIpractice {
 			//
 			//TODO: Add the constructor code here
 			//
-
+			
 			//hide password text in text field and replace with asteriks for security reasons
 			textBoxPWORD->PasswordChar = '*';
 			//max password characters in text field
 			textBoxPWORD->MaxLength = 25;
-		}
 
+
+		}
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -236,8 +237,10 @@ private: System::Void Label2_Click(System::Object^ sender, System::EventArgs^ e)
 }
 private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide(); //hide current form
+	//open register form
 	Register_Form^ rform = gcnew Register_Form();
-	rform->Show(); //open register form
+	rform->Show();
+	
 }
 private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {
 	//connection to db upon click
