@@ -8,6 +8,7 @@ namespace GUIpractice {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	/// <summary>
 	/// Summary for Forgot_Password
@@ -245,7 +246,27 @@ private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e
 private: System::Void Label_User_Name_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-	//
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+	//check if username exists
+	if (SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con)) {
+		MessageBox::Show("Username Does not exist! Please Try Again.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		con->Close();
+	}
+	else {
+		SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_password)VALUES(@user_password)", con);
+		cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
+		cmd->ExecuteNonQuery();
+		SqlDataReader^ rd = cmd->ExecuteReader();
+		if (rd->RecordsAffected) {
+			MessageBox::Show("Password Changed Succsessfully", "Success", MessageBoxButtons::OK);
+			con->Close();
+		}
+		else {
+			MessageBox::Show("Error. Query Connection Failed");
+			con->Close();
+		}
+	}
 }
 };
 }

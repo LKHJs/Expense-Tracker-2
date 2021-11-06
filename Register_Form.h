@@ -46,7 +46,8 @@ namespace GUIpractice {
 	private: System::Windows::Forms::TextBox^ textBox4;
 	private: System::Windows::Forms::ComboBox^ comboBox1;
 	private: System::Windows::Forms::Button^ button_Create;
-	private: System::Windows::Forms::Button^ button_Cancle;
+	private: System::Windows::Forms::Button^ button_Cancel;
+
 
 	private:
 		/// <summary>
@@ -71,7 +72,7 @@ namespace GUIpractice {
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			this->button_Create = (gcnew System::Windows::Forms::Button());
-			this->button_Cancle = (gcnew System::Windows::Forms::Button());
+			this->button_Cancel = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// label_User_name
@@ -174,22 +175,22 @@ namespace GUIpractice {
 			this->button_Create->UseVisualStyleBackColor = true;
 			this->button_Create->Click += gcnew System::EventHandler(this, &Register_Form::button_Create_Click);
 			// 
-			// button_Cancle
+			// button_Cancel
 			// 
-			this->button_Cancle->Location = System::Drawing::Point(106, 243);
-			this->button_Cancle->Name = L"button_Cancle";
-			this->button_Cancle->Size = System::Drawing::Size(80, 33);
-			this->button_Cancle->TabIndex = 10;
-			this->button_Cancle->Text = L"Cancel";
-			this->button_Cancle->UseVisualStyleBackColor = true;
-			this->button_Cancle->Click += gcnew System::EventHandler(this, &Register_Form::Button_Cancle_Click);
+			this->button_Cancel->Location = System::Drawing::Point(106, 243);
+			this->button_Cancel->Name = L"button_Cancel";
+			this->button_Cancel->Size = System::Drawing::Size(80, 33);
+			this->button_Cancel->TabIndex = 10;
+			this->button_Cancel->Text = L"Cancel";
+			this->button_Cancel->UseVisualStyleBackColor = true;
+			this->button_Cancel->Click += gcnew System::EventHandler(this, &Register_Form::Button_Cancle_Click);
 			// 
 			// Register_Form
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(317, 357);
-			this->Controls->Add(this->button_Cancle);
+			this->Controls->Add(this->button_Cancel);
 			this->Controls->Add(this->button_Create);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->textBox4);
@@ -210,10 +211,7 @@ namespace GUIpractice {
 	private: System::Void TextBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void Button_Cancle_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Hide(); //hide current form
-	MyForm^ my_form = gcnew MyForm();
-	my_form->ShowDialog(); //open login form
-	//Form::Close();
+	Form::Close();
 }
 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
