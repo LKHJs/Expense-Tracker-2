@@ -180,7 +180,7 @@ namespace GUIpractice {
 			this->button_Cancle->Name = L"button_Cancle";
 			this->button_Cancle->Size = System::Drawing::Size(80, 33);
 			this->button_Cancle->TabIndex = 10;
-			this->button_Cancle->Text = L"Cancle";
+			this->button_Cancle->Text = L"Cancel";
 			this->button_Cancle->UseVisualStyleBackColor = true;
 			this->button_Cancle->Click += gcnew System::EventHandler(this, &Register_Form::Button_Cancle_Click);
 			// 
@@ -210,7 +210,10 @@ namespace GUIpractice {
 	private: System::Void TextBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void Button_Cancle_Click(System::Object^ sender, System::EventArgs^ e) {
-	Form::Close();
+	this->Hide(); //hide current form
+	MyForm^ my_form = gcnew MyForm();
+	my_form->ShowDialog(); //open login form
+	//Form::Close();
 }
 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }

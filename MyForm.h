@@ -259,8 +259,8 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		MessageBox::Show("Login Successful");
 		//System::String^ newguid = 
 		this->Hide(); //hide current form
-		MainHub^ mainHubForm = gcnew MainHub;
-		mainHubForm->ShowDialog();
+		//MainHub^ mainHubForm = gcnew MainHub;
+		//mainHubForm->ShowDialog();
 		//con->Close();
 	}
 	else {
