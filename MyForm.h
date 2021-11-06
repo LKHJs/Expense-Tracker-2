@@ -1,6 +1,7 @@
 #pragma once
 #include "Forgot_Password.h"
 #include "Register_Form.h"
+#include "MainHub.h"
 
 namespace GUIpractice {
 
@@ -252,6 +253,9 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	*/
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
+		this->Hide(); //hide current form
+		MainHub^ mainHubForm = gcnew MainHub;
+		mainHubForm->ShowDialog();
 		con->Close();
 	}
 	else {
