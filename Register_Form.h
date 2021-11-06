@@ -170,6 +170,7 @@ namespace GUIpractice {
 			this->button_Create->TabIndex = 9;
 			this->button_Create->Text = L"Create";
 			this->button_Create->UseVisualStyleBackColor = true;
+			this->button_Create->Click += gcnew System::EventHandler(this, &Register_Form::Button_Create_Click);
 			// 
 			// button_Cancle
 			// 
@@ -208,6 +209,20 @@ namespace GUIpractice {
 	}
 private: System::Void Button_Cancle_Click(System::Object^ sender, System::EventArgs^ e) {
 	Form::Close();
+}
+private: System::Void Button_Create_Click(System::Object^ sender, System::EventArgs^ e) {
+	fstream myFile;
+	myFile.open("registeredUsers.txt", ios::app);
+	if (myFile.is_open()) {
+		AnsiString username = textBox1->Text;
+		AnsiString password = textBox2->Text;
+
+		myFile << username << "," << password << " \n";
+		myFile.close();
+
+	}
+
+
 }
 };
 }
