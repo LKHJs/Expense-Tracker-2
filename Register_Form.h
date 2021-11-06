@@ -222,6 +222,7 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 			MessageBox::Show("Username Already exists! Please Try Again.");
 			con->Close();
 		}
+		//otherwise proceed with connection and query calls
 		else {
 			SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
 			cmd->Parameters->AddWithValue("@user_name", textBox1->Text);

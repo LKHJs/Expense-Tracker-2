@@ -220,6 +220,7 @@ private: System::Void Label1_Click(System::Object^ sender, System::EventArgs^ e)
 
 private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Hide(); //hide current form
+	//declare new form and display
 	Forgot_Password^ forgotPWordForm = gcnew Forgot_Password;
 	forgotPWordForm->ShowDialog();
 	

@@ -194,6 +194,7 @@ namespace GUIpractice {
 			this->button1->TabIndex = 10;
 			this->button1->Text = L"Submit";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Forgot_Password::button1_Click);
 			// 
 			// button2
 			// 
@@ -242,6 +243,9 @@ private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e
 	Form::Close();
 }
 private: System::Void Label_User_Name_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+	//
 }
 };
 }
