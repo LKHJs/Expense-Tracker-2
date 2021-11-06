@@ -8,6 +8,7 @@ namespace GUIpractice {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
 
 	/// <summary>
 	/// Summary for Register_Form
@@ -92,6 +93,7 @@ namespace GUIpractice {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(170, 20);
 			this->textBox1->TabIndex = 1;
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &Register_Form::textBox1_TextChanged);
 			// 
 			// label_Password
 			// 
@@ -170,6 +172,7 @@ namespace GUIpractice {
 			this->button_Create->TabIndex = 9;
 			this->button_Create->Text = L"Create";
 			this->button_Create->UseVisualStyleBackColor = true;
+			this->button_Create->Click += gcnew System::EventHandler(this, &Register_Form::button_Create_Click);
 			// 
 			// button_Cancle
 			// 
@@ -208,6 +211,23 @@ namespace GUIpractice {
 	}
 private: System::Void Button_Cancle_Click(System::Object^ sender, System::EventArgs^ e) {
 	Form::Close();
+}
+private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void button_Create_Click(System::Object^ sender, System::EventArgs^ e) {
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user (user_name, user_password, security_answer) VALUES ('"+ this->textBox1->Text + ", '" + this->textBox2->Text + "', '"+this->textBox4+"';", con);
+	cmd->ExecuteNonQuery();
+	SqlDataReader^ rd = cmd->ExecuteReader();
+	if (rd->RecordsAffected) {
+		MessageBox::Show("Registration Successful!");
+		con->Close();
+	}
+	else {
+		MessageBox::Show("Error. Query Connection Failed");
+		con->Close();
+	}
 }
 };
 }
