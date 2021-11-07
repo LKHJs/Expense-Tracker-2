@@ -225,14 +225,14 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
 
+
 		//check if username exists
 		SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con);
-		uniqueUSRCHECK->ExecuteNonQuery();
 		SqlDataReader^ usrCheck = uniqueUSRCHECK->ExecuteReader();
 		if (usrCheck->HasRows) {
 			MessageBox::Show("Username Already exists! Please Try Again.");
+			usrCheck->Close();
 			con->Close();
-			
 		}
 		//otherwise proceed with connection and query calls
 		else {
@@ -241,7 +241,6 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 			cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
 			cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
 			cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
-			cmd->ExecuteNonQuery();
 			SqlDataReader^ rd = cmd->ExecuteReader();
 			//if registration is successful
 			if (rd->RecordsAffected) {
@@ -254,10 +253,8 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 			else {
 				//if query or connection fail
 				MessageBox::Show("Error. Query Connection Failed");
-				rd->Close();
 				con->Close();
 			}
-			rd->Close();
 		}
 }
 };

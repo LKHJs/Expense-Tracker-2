@@ -164,6 +164,7 @@ namespace GUIpractice {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(183, 22);
 			this->textBox1->TabIndex = 7;
+			this->textBox1->TextChanged += gcnew System::EventHandler(this, &Forgot_Password::textBox1_TextChanged);
 			// 
 			// label_Re_Pass
 			// 
@@ -253,9 +254,13 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 		MessageBox::Show("Username Does not exist! Please Try Again.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		con->Close();
 	}
+	else if (SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE security_answer='" + this->textBox_answer->Text + "';", con)) {
+		MessageBox::Show("Answer does not match the answer associated with the account.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		con->Close();
+	}
 	else {
 		SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_password)VALUES(@user_password)", con);
-		cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
+		cmd->Parameters->AddWithValue("@user_password", textBox1->Text);
 		cmd->ExecuteNonQuery();
 		SqlDataReader^ rd = cmd->ExecuteReader();
 		if (rd->RecordsAffected) {
@@ -269,6 +274,8 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 			con->Close();
 		}
 	}
+}
+private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

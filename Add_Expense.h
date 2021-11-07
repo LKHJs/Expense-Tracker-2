@@ -207,7 +207,7 @@ private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
 	//////////////Insert data into table///////////////
-	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(expense_name,expense_amount,expense_attribute,expense_date)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date)", con);
+	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense(expense_name,expense_amount,expense_attribute,expense_date)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date)", con);
 	cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
 	cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
 	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Items);

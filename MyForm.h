@@ -260,7 +260,7 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		MainHub^ mainHubForm = gcnew MainHub;
 		mainHubForm->ShowDialog();
 		rd->Close();
-		con->Close();
+		//con->Close();
 	}
 	else {
 		MessageBox::Show("Error. Login Attempt Failed");
