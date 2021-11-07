@@ -1,4 +1,5 @@
 #pragma once
+#include "Add_Expense.h"
 
 namespace GUIpractice {
 
@@ -137,7 +138,8 @@ namespace GUIpractice {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		
+		Add_Expense^ addExpForm = gcnew Add_Expense;
+		addExpForm->ShowDialog();
 	}
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	dataGridView1->DataSource = 0;

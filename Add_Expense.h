@@ -131,6 +131,7 @@ namespace GUIpractice {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(197, 20);
 			this->textBox4->TabIndex = 6;
+			this->textBox4->Text = L"DD/MM/YYYY";
 			this->textBox4->TextChanged += gcnew System::EventHandler(this, &Add_Expense::textBox4_TextChanged);
 			// 
 			// label4
@@ -211,7 +212,7 @@ private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e
 	cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
 	cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
 	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Items);
-	cmd->Parameters->AddWithValue("@expense_data", textBox4->Text);
+	cmd->Parameters->AddWithValue("@expense_date", textBox4->Text);
 	cmd->ExecuteNonQuery();
 	SqlDataReader^ rd = cmd->ExecuteReader();
 	//if registration is successful

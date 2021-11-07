@@ -220,14 +220,10 @@ private: System::Void Label1_Click(System::Object^ sender, System::EventArgs^ e)
 
 
 private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Hide(); //hide current form
 	//declare new form and display
 	Forgot_Password^ forgotPWordForm = gcnew Forgot_Password;
-	forgotPWordForm->Show();
+	forgotPWordForm->ShowDialog();
 	
-	
-
-
 }
 private: System::Void TextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -236,10 +232,10 @@ private: System::Void TextBox1_TextChanged(System::Object^ sender, System::Event
 private: System::Void Label2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Hide(); //hide current form
+	
 	//open register form
 	Register_Form^ rform = gcnew Register_Form();
-	rform->Show();
+	rform->ShowDialog();
 	
 }
 private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {

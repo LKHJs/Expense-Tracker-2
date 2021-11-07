@@ -17,16 +17,13 @@ namespace GUIpractice {
 	{
 	public:
 		
-		Register_Form(void)
+		Register_Form()
 		{
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
 			//
-			//
-			
 		}
-	private: System::Windows::Forms::Form^ otherform;
 
 	protected:
 		/// <summary>
