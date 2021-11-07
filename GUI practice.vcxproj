@@ -136,12 +136,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Add_Expense.cpp" />
     <ClCompile Include="Forgot_Password.cpp" />
     <ClCompile Include="MainHub.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="Register_Form.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Add_Expense.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Forgot_Password.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -156,6 +160,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Add_Expense.resx">
+      <DependentUpon>Add_Expense.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forgot_Password.resx">
       <DependentUpon>Forgot_Password.h</DependentUpon>
     </EmbeddedResource>

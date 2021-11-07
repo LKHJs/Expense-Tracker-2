@@ -37,7 +37,8 @@ namespace GUIpractice {
 		}
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ addExpButton;
+
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button3;
 	protected:
@@ -57,7 +58,7 @@ namespace GUIpractice {
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->addExpButton = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->button3 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
@@ -82,18 +83,19 @@ namespace GUIpractice {
 			this->label1->Text = L"Recent Expenses";
 			this->label1->Click += gcnew System::EventHandler(this, &MainHub::label1_Click);
 			// 
-			// button1
+			// addExpButton
 			// 
-			this->button1->Location = System::Drawing::Point(12, 265);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 2;
-			this->button1->Text = L"button1";
-			this->button1->UseVisualStyleBackColor = true;
+			this->addExpButton->Location = System::Drawing::Point(12, 265);
+			this->addExpButton->Name = L"addExpButton";
+			this->addExpButton->Size = System::Drawing::Size(78, 23);
+			this->addExpButton->TabIndex = 2;
+			this->addExpButton->Text = L"Add Expense";
+			this->addExpButton->UseVisualStyleBackColor = true;
+			this->addExpButton->Click += gcnew System::EventHandler(this, &MainHub::addExpButton_Click);
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(95, 265);
+			this->button2->Location = System::Drawing::Point(96, 265);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(75, 23);
 			this->button2->TabIndex = 3;
@@ -116,7 +118,7 @@ namespace GUIpractice {
 			this->ClientSize = System::Drawing::Size(584, 394);
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->addExpButton);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dataGridView1);
 			this->Name = L"MainHub";
@@ -139,5 +141,8 @@ namespace GUIpractice {
 	}
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
-	};
+	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		
+	}
+};
 }
