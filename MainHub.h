@@ -69,7 +69,7 @@ namespace GUIpractice {
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(12, 35);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(239, 224);
+			this->dataGridView1->Size = System::Drawing::Size(267, 224);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainHub::dataGridView1_CellContentClick);
 			// 
@@ -85,9 +85,9 @@ namespace GUIpractice {
 			// 
 			// addExpButton
 			// 
-			this->addExpButton->Location = System::Drawing::Point(12, 265);
+			this->addExpButton->Location = System::Drawing::Point(285, 35);
 			this->addExpButton->Name = L"addExpButton";
-			this->addExpButton->Size = System::Drawing::Size(78, 23);
+			this->addExpButton->Size = System::Drawing::Size(90, 23);
 			this->addExpButton->TabIndex = 2;
 			this->addExpButton->Text = L"Add Expense";
 			this->addExpButton->UseVisualStyleBackColor = true;
@@ -95,21 +95,23 @@ namespace GUIpractice {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(96, 265);
+			this->button2->Location = System::Drawing::Point(92, 265);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->Size = System::Drawing::Size(105, 23);
 			this->button2->TabIndex = 3;
-			this->button2->Text = L"button2";
+			this->button2->Text = L"Show Expenses";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &MainHub::button2_Click);
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(176, 265);
+			this->button3->Location = System::Drawing::Point(285, 80);
 			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
+			this->button3->Size = System::Drawing::Size(90, 23);
 			this->button3->TabIndex = 4;
-			this->button3->Text = L"button3";
+			this->button3->Text = L"Delete Expense";
 			this->button3->UseVisualStyleBackColor = true;
+			this->button3->Click += gcnew System::EventHandler(this, &MainHub::button3_Click);
 			// 
 			// MainHub
 			// 
@@ -130,19 +132,24 @@ namespace GUIpractice {
 		}
 #pragma endregion
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-		dataGridView1->DataSource = 0;
-		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
-		con->Open();
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense WHERE user_id=app_user.user_id",con);
-		DataTable^ table = gcnew DataTable();
-		adapter->Fill(table);
-		dataGridView1->DataSource = table;
-		//con->Close();
+		
 	}
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		
 	}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	dataGridView1->DataSource = 0;
+		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+		con->Open();
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense ",con);
+		DataTable^ table = gcnew DataTable();
+		adapter->Fill(table);
+		dataGridView1->DataSource = table;
+		con->Close();
+}
+private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
