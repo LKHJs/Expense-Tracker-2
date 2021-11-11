@@ -88,6 +88,7 @@ namespace GUIpractice {
 			this->label_User_Name->Text = L"Username";
 			this->label_User_Name->Click += gcnew System::EventHandler(this, &Forgot_Password::Label_User_Name_Click);
 			// 
+			// INPUT
 			// textBox_User_Name
 			// 
 			this->textBox_User_Name->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
@@ -136,6 +137,7 @@ namespace GUIpractice {
 			this->label_answer->TabIndex = 4;
 			this->label_answer->Text = L"Enter your answer:";
 			// 
+			// INPUT
 			// textBox_answer
 			// 
 			this->textBox_answer->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -156,6 +158,7 @@ namespace GUIpractice {
 			this->label_Pass->TabIndex = 6;
 			this->label_Pass->Text = L"Enter your new Password:";
 			// 
+			// INPUT
 			// textBox1
 			// 
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -177,6 +180,7 @@ namespace GUIpractice {
 			this->label_Re_Pass->TabIndex = 8;
 			this->label_Re_Pass->Text = L"Re-Enter your new password:";
 			// 
+			// INPUT
 			// textBox2
 			// 
 			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
@@ -249,31 +253,59 @@ private: System::Void Label_User_Name_Click(System::Object^ sender, System::Even
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
-	//check if username exists
-	if (SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con)) {
-		MessageBox::Show("Username Does not exist! Please Try Again.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+	//create query for login credential verification
+	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name) AND security_answer=(@user_answer)", con);
+
+	/******passing sql query values by parameter because concatenated sql queries are vulnerable to sql injection attacks******/
+	cmd->Parameters->AddWithValue("@user_name", textBox_User_Name->Text);
+	cmd->Parameters->AddWithValue("@user_answer", textBox_answer->Text);
+
+	cmd->ExecuteNonQuery(); //execute command
+	SqlDataReader^ rd = cmd->ExecuteReader();
+
+	if (rd->HasRows)
+	{
+		MessageBox::Show("Username does exist! Answer is correct!");
+		rd->Close();
+
+			// If passwords match & Password Update since everything checks out. Username, answer, passwords all pass the test.
+			if (this->textBox1->Text == this->textBox2->Text)
+			{
+				MessageBox::Show("Both passwords match!");
+
+				// Updates the password. *Working*
+				SqlCommand^ cmd = gcnew SqlCommand("UPDATE [expTrackerApp].[dbo].[app_user] SET user_password=(@user_password) WHERE user_name=(@user_name) AND security_answer=(@user_answer)", con);
+				/******passing sql query values by parameter because concatenated sql queries are vulnerable to sql injection attacks******/
+				cmd->Parameters->AddWithValue("@user_name", textBox_User_Name->Text);
+				cmd->Parameters->AddWithValue("@user_answer", textBox_answer->Text);
+				cmd->Parameters->AddWithValue("@user_password", textBox1->Text);
+				SqlDataReader^ rd = cmd->ExecuteReader();
+				if (rd->RecordsAffected) {
+					MessageBox::Show("Password Changed Succsessfully", "Success", MessageBoxButtons::OK);
+					Form::Close();
+					rd->Close();
+					con->Close();
+				}
+				else {
+					MessageBox::Show("Error. Query Connection Failed");
+					rd->Close();
+					con->Close();
+				}
+			}
+			// If the password does not match
+			else
+			{
+				MessageBox::Show("Passwords don't match! Can't change password!");
+				con->Close();
+			}
+	}
+	else
+	{
+		MessageBox::Show("Username/answer is incorrect!");
 		con->Close();
 	}
-	else if (SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE security_answer='" + this->textBox_answer->Text + "';", con)) {
-		MessageBox::Show("Answer does not match the answer associated with the account.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		con->Close();
-	}
-	else {
-		SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_password)VALUES(@user_password)", con);
-		cmd->Parameters->AddWithValue("@user_password", textBox1->Text);
-		cmd->ExecuteNonQuery();
-		SqlDataReader^ rd = cmd->ExecuteReader();
-		if (rd->RecordsAffected) {
-			MessageBox::Show("Password Changed Succsessfully", "Success", MessageBoxButtons::OK);
-			Form::Close();
-			rd->Close();
-			con->Close();
-		}
-		else {
-			MessageBox::Show("Error. Query Connection Failed");
-			con->Close();
-		}
-	}
+
 }
 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
