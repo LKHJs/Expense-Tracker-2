@@ -219,12 +219,12 @@ private: System::Void CheckedListBox1_SelectedIndexChanged(System::Object^ sende
 private: System::Void Label1_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 
-
+// Opens Forgot Password Page
 private: System::Void Button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	//declare new form and display
-	Forgot_Password^ forgotPWordForm = gcnew Forgot_Password;
-	forgotPWordForm->ShowDialog();
-	
+	Forgot_Password^ forgotPWordForm = gcnew Forgot_Password; //declare new form and display
+	this->Hide(); // Hides current form
+	forgotPWordForm->ShowDialog();	// Opens next form
+	this->Show();	// If next form is closed. Opens previous form. (This form.)
 }
 private: System::Void TextBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
@@ -232,13 +232,15 @@ private: System::Void TextBox1_TextChanged(System::Object^ sender, System::Event
 
 private: System::Void Label2_Click(System::Object^ sender, System::EventArgs^ e) {
 }
+// Opens Registration Page
 private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs^ e) {
 	
-	//open register form
-	Register_Form^ rform = gcnew Register_Form();
-	rform->ShowDialog();
-	
+	Register_Form^ rform = gcnew Register_Form(); // Creates form to be open next
+	this->Hide(); // Hides current form
+	rform->ShowDialog(); // Opens next form
+	this->Show(); // If next form is closed. Opens previous form. (This form.)
 }
+// Opens User's Menu Page. (Page for users that are logged in)
 private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {
 	//execute connection query with credentials and open connection to database server
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
@@ -257,17 +259,10 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	//if SqlDataReader contains one or more rows login was successful
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
-		
+		MainHub^ mainHubForm = gcnew MainHub; // Creates form to be open next
 		this->Hide(); //hide current form
-		MainHub^ mainHubForm = gcnew MainHub;
-		mainHubForm->ShowDialog();
-
-		while (rd->Read()) {
-
-		}
-
-
-
+		mainHubForm->ShowDialog(); // Opens next form
+		this->Show();// If next form is closed. Opens previous form. (This form.)
 		rd->Close();
 		con->Close();
 	}
