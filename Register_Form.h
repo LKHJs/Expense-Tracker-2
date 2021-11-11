@@ -233,9 +233,9 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 		}
 		//otherwise proceed with connection and query calls
 		else {
+			usrCheck->Close(); //close previous datareader from usercheck
 			if (this->textBox2->Text == this->textBox3->Text)
 			{
-				usrCheck->Close(); //close previous datareader from usercheck
 				SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
 				cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
 				cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
@@ -252,12 +252,14 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 				else {
 					//if query or connection fail
 					MessageBox::Show("Error. Query Connection Failed");
+					rd->Close();
 					con->Close();
 				}
 			}
 			else
 			{
 				MessageBox::Show("Passwords don't match!");
+
 			}
 		}
 }
