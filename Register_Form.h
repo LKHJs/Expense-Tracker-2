@@ -233,24 +233,31 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 		}
 		//otherwise proceed with connection and query calls
 		else {
-			usrCheck->Close(); //close previous datareader from usercheck
-			SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
-			cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
-			cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
-			cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
-			SqlDataReader^ rd = cmd->ExecuteReader();
-			//if registration is successful
-			if (rd->RecordsAffected) {
-				MessageBox::Show("Registration Successful!");
-				//transition back to login form
-				Form::Close();
-				rd->Close();
-				con->Close();
+			if (this->textBox2->Text == this->textBox3->Text)
+			{
+				usrCheck->Close(); //close previous datareader from usercheck
+				SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
+				cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
+				cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
+				cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
+				SqlDataReader^ rd = cmd->ExecuteReader();
+				//if registration is successful
+				if (rd->RecordsAffected) {
+					MessageBox::Show("Registration Successful!");
+					//transition back to login form
+					Form::Close();
+					rd->Close();
+					con->Close();
+				}
+				else {
+					//if query or connection fail
+					MessageBox::Show("Error. Query Connection Failed");
+					con->Close();
+				}
 			}
-			else {
-				//if query or connection fail
-				MessageBox::Show("Error. Query Connection Failed");
-				con->Close();
+			else
+			{
+				MessageBox::Show("Passwords don't match!");
 			}
 		}
 }
