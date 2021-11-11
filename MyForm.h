@@ -26,13 +26,14 @@ namespace GUIpractice {
 			//TODO: Add the constructor code here
 			//
 			
-			//hide password text in text field and replace with asteriks for security reasons
+			//hide password text in textfield and replace with asteriks for security reasons
 			textBoxPWORD->PasswordChar = '*';
 			//max password characters in text field
 			textBoxPWORD->MaxLength = 25;
 
 
 		}
+		
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -239,30 +240,44 @@ private: System::Void ButtonRegi_Click(System::Object^ sender, System::EventArgs
 	
 }
 private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArgs^ e) {
-	//connection to db upon click
-	
+	//execute connection query with credentials and open connection to database server
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
-	//create query for login credential verification
-	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='"+this->textBoxUNAME->Text+"' AND user_password='"+this->textBoxPWORD->Text+"';", con);
-	cmd->ExecuteNonQuery();
-	SqlDataReader^ rd = cmd->ExecuteReader();
 
-	//upon successful verification do the following
+	//create query for login credential verification
+	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name) AND user_password=(@user_password)", con);
+
+	/******passing sql query values by parameter because concatenated sql queries are vulnerable to sql injection attacks******/
+	cmd->Parameters->AddWithValue("@user_name", textBoxUNAME->Text);
+	cmd->Parameters->AddWithValue("@user_password", textBoxPWORD->Text);
+
+	cmd->ExecuteNonQuery(); //execute command
+	SqlDataReader^ rd = cmd->ExecuteReader(); 
+	
+	//if SqlDataReader contains one or more rows login was successful
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
-		//System::String^ newguid = 
+		
 		this->Hide(); //hide current form
 		MainHub^ mainHubForm = gcnew MainHub;
 		mainHubForm->ShowDialog();
+
+		while (rd->Read()) {
+
+		}
+
+
+
 		rd->Close();
-		//con->Close();
+		con->Close();
 	}
 	else {
 		MessageBox::Show("Error. Login Attempt Failed");
 		rd->Close();
 		con->Close();
 	}
+	rd->Close();
+	con->Close();
 }
 private: System::Void textBoxPWORD_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }

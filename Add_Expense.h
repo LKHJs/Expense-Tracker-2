@@ -211,8 +211,11 @@ private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e
 	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense(expense_name,expense_amount,expense_attribute,expense_date)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date)", con);
 	cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
 	cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
-	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Items);
-	cmd->Parameters->AddWithValue("@expense_date", textBox4->Text);
+	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedText);
+	//converting expense date to sql readable date
+	DateTime expenseDate = DateTime::Parse(this->textBox4->Text);
+	cmd->Parameters->AddWithValue("@expense_date", expenseDate);
+
 	cmd->ExecuteNonQuery();
 	SqlDataReader^ rd = cmd->ExecuteReader();
 	//if registration is successful
@@ -226,13 +229,9 @@ private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e
 	else {
 		//if query or connection fail
 		MessageBox::Show("Error. Query Connection Failed", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		rd->Close();
 		con->Close();
 	}
-
-
-
-
-
 
 }
 	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
