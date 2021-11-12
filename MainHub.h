@@ -151,21 +151,26 @@ namespace GUIpractice {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		Add_Expense^ addExpForm = gcnew Add_Expense;
-		this->Hide();
-		addExpForm->ShowDialog();
-		this->Show();
+		Add_Expense^ addExpForm = gcnew Add_Expense(username); // Creates next form.
+		this->Hide(); // Hides current form.
+		addExpForm->ShowDialog(); // Displays next form
+		this->Show(); // Displays current form.
 	}
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	dataGridView1->DataSource = 0;
+		// Connects to server
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
 		
-
+		// Creates Table
 		DataTable^ table = gcnew DataTable();
+		// Gets desired data for table
 		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+		// Fills table with desired data
 		adapter->Fill(table);
+		// Displays table in grid.
 		dataGridView1->DataSource = table;
+		// Closes connection
 		con->Close();
 }
 private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
