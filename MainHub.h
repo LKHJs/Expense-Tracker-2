@@ -1,5 +1,7 @@
 #pragma once
 #include "Add_Expense.h"
+#include "DeleteExpense.h"
+#include "UpdateExpense.h"
 
 namespace GUIpractice {
 
@@ -41,7 +43,9 @@ namespace GUIpractice {
 	private: System::Windows::Forms::Button^ addExpButton;
 
 	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ deleteExp;
+
+	private: System::Windows::Forms::Button^ updateExp;
 	protected:
 
 	private:
@@ -61,7 +65,8 @@ namespace GUIpractice {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->addExpButton = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->deleteExp = (gcnew System::Windows::Forms::Button());
+			this->updateExp = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -84,42 +89,53 @@ namespace GUIpractice {
 			this->label1->Text = L"Recent Expenses";
 			this->label1->Click += gcnew System::EventHandler(this, &MainHub::label1_Click);
 			// 
-			// addExpButton add expense button
+			// addExpButton
 			// 
 			this->addExpButton->Location = System::Drawing::Point(285, 35);
 			this->addExpButton->Name = L"addExpButton";
-			this->addExpButton->Size = System::Drawing::Size(90, 23);
+			this->addExpButton->Size = System::Drawing::Size(96, 23);
 			this->addExpButton->TabIndex = 2;
 			this->addExpButton->Text = L"Add Expense";
 			this->addExpButton->UseVisualStyleBackColor = true;
 			this->addExpButton->Click += gcnew System::EventHandler(this, &MainHub::addExpButton_Click);
 			// 
-			// button2 Update Button
+			// button2
 			// 
 			this->button2->Location = System::Drawing::Point(92, 265);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(105, 23);
 			this->button2->TabIndex = 3;
-			this->button2->Text = L"Update";
+			this->button2->Text = L"Show Expenses";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainHub::button2_Click);
 			// 
-			// button3 Delete button
+			// deleteExp
 			// 
-			this->button3->Location = System::Drawing::Point(285, 80);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(90, 23);
-			this->button3->TabIndex = 4;
-			this->button3->Text = L"Delete Expense";
-			this->button3->UseVisualStyleBackColor = true;
-			this->button3->Click += gcnew System::EventHandler(this, &MainHub::button3_Click);
+			this->deleteExp->Location = System::Drawing::Point(285, 80);
+			this->deleteExp->Name = L"deleteExp";
+			this->deleteExp->Size = System::Drawing::Size(96, 23);
+			this->deleteExp->TabIndex = 4;
+			this->deleteExp->Text = L"Delete Expense";
+			this->deleteExp->UseVisualStyleBackColor = true;
+			this->deleteExp->Click += gcnew System::EventHandler(this, &MainHub::deleteExp_Click);
+			// 
+			// updateExp
+			// 
+			this->updateExp->Location = System::Drawing::Point(285, 127);
+			this->updateExp->Name = L"updateExp";
+			this->updateExp->Size = System::Drawing::Size(96, 26);
+			this->updateExp->TabIndex = 5;
+			this->updateExp->Text = L"Update Expense";
+			this->updateExp->UseVisualStyleBackColor = true;
+			this->updateExp->Click += gcnew System::EventHandler(this, &MainHub::updateExp_Click);
 			// 
 			// MainHub
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(584, 394);
-			this->Controls->Add(this->button3);
+			this->Controls->Add(this->updateExp);
+			this->Controls->Add(this->deleteExp);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->addExpButton);
 			this->Controls->Add(this->label1);
@@ -158,7 +174,18 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 		dataGridView1->DataSource = table;
 		con->Close();
 }
-private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	   //Delete Expense BUtton Click Event Handler 
+private: System::Void deleteExp_Click(System::Object^ sender, System::EventArgs^ e) {
+	DeleteExpense^ delExpFrm = gcnew DeleteExpense;
+	delExpFrm->ShowDialog();
 }
+
+	   //Update Expense BUtton Click Event Handler 
+private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^ e) {
+	UpdateExpense^ updExpFrm = gcnew UpdateExpense;
+	updExpFrm->ShowDialog();
+}
+
 };
 }

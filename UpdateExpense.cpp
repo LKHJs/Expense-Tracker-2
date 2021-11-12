@@ -1,14 +1,12 @@
-#include "MainHub.h"
+#include "UpdateExpense.h"
 
-/*
 using namespace System;
 using namespace System::Windows::Forms;
 [STAThread]
 
-void main5(array<String^>^ args) {
+void main6(array<String^>^ args) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	GUIpractice::MainHub form;
+	GUIpractice::UpdateExpense form;
 	Application::Run(% form);
 }
-*/

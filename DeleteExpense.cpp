@@ -1,14 +1,12 @@
-#include "MainHub.h"
+#include "DeleteExpense.h"
 
-/*
 using namespace System;
 using namespace System::Windows::Forms;
 [STAThread]
 
-void main5(array<String^>^ args) {
+void main7(array<String^>^ args) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	GUIpractice::MainHub form;
+	GUIpractice::DeleteExpense form;
 	Application::Run(% form);
 }
-*/

@@ -137,13 +137,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Add_Expense.cpp" />
+    <ClCompile Include="DeleteExpense.cpp" />
     <ClCompile Include="Forgot_Password.cpp" />
     <ClCompile Include="MainHub.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="Register_Form.cpp" />
+    <ClCompile Include="UpdateExpense.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add_Expense.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DeleteExpense.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Forgot_Password.h">
@@ -158,10 +163,16 @@
     <ClInclude Include="Register_Form.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="UpdateExpense.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Add_Expense.resx">
       <DependentUpon>Add_Expense.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteExpense.resx">
+      <DependentUpon>DeleteExpense.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forgot_Password.resx">
       <DependentUpon>Forgot_Password.h</DependentUpon>
@@ -174,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Register_Form.resx">
       <DependentUpon>Register_Form.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateExpense.resx">
+      <DependentUpon>UpdateExpense.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
