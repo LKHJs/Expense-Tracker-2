@@ -31,7 +31,6 @@ namespace GUIpractice {
 			//max password characters in text field
 			textBoxPWORD->MaxLength = 25;
 
-
 		}
 		
 	protected:
@@ -260,14 +259,8 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		
 		this->Hide(); //hide current form
 		MainHub^ mainHubForm = gcnew MainHub;
-		mainHubForm->ShowDialog();
-
-		while (rd->Read()) {
-
-		}
-
-
-
+		mainHubForm->ShowDialog(); //open mainhub form
+		//close all datareader and connection string
 		rd->Close();
 		con->Close();
 	}

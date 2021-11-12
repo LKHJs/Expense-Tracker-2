@@ -138,6 +138,7 @@ namespace GUIpractice {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		//transition into add expense form
 		Add_Expense^ addExpForm = gcnew Add_Expense;
 		addExpForm->ShowDialog();
 	}
@@ -145,9 +146,13 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 	dataGridView1->DataSource = 0;
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
+
+		//define data adapter to grab data from datbase
 		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense ",con);
 		DataTable^ table = gcnew DataTable();
 		adapter->Fill(table);
+
+		//fill datagrid panel with expense data
 		dataGridView1->DataSource = table;
 		con->Close();
 }
