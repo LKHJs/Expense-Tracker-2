@@ -140,7 +140,9 @@ namespace GUIpractice {
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		//transition into add expense form
 		Add_Expense^ addExpForm = gcnew Add_Expense;
+		this->Hide();
 		addExpForm->ShowDialog();
+		this->Show();
 	}
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	dataGridView1->DataSource = 0;
