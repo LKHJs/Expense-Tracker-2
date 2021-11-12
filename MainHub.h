@@ -19,9 +19,22 @@ namespace GUIpractice {
 	public ref class MainHub : public System::Windows::Forms::Form
 	{
 	public:
+		String^ username;
+
+
+	public:
 		MainHub(void)
 		{
 			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+
+		MainHub(String ^user)
+		{
+			InitializeComponent();
+			username = user;
 			//
 			//TODO: Add the constructor code here
 			//
@@ -154,24 +167,26 @@ namespace GUIpractice {
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		//transition into add expense form
-		Add_Expense^ addExpForm = gcnew Add_Expense;
-		this->Hide();
-		addExpForm->ShowDialog();
-		this->Show();
+		Add_Expense^ addExpForm = gcnew Add_Expense(username); // Creates next form.
+		this->Hide(); // Hides current form.
+		addExpForm->ShowDialog(); // Displays next form
+		this->Show(); // Displays current form.
 	}
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	dataGridView1->DataSource = 0;
+		// Connects to server
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
-
-		//define data adapter to grab data from datbase
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense ",con);
+		
+		// Creates Table
 		DataTable^ table = gcnew DataTable();
+		// Gets desired data for table
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+		// Fills table with desired data
 		adapter->Fill(table);
-
-		//fill datagrid panel with expense data
+		// Displays table in grid.
 		dataGridView1->DataSource = table;
+		// Closes connection
 		con->Close();
 }
 

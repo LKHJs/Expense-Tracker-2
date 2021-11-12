@@ -241,6 +241,7 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 				cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
 				cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
 				cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
+
 				SqlDataReader^ rd = cmd->ExecuteReader();
 				//if registration is successful
 				if (rd->RecordsAffected) {
