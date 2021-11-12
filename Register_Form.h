@@ -87,7 +87,7 @@ namespace GUIpractice {
 			this->label_User_name->TabIndex = 0;
 			this->label_User_name->Text = L"Username:";
 			// 
-			// textBox1
+			// textBox1 UserName textfield
 			// 
 			this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -108,7 +108,7 @@ namespace GUIpractice {
 			this->label_Password->TabIndex = 2;
 			this->label_Password->Text = L"Password:";
 			// 
-			// textBox2
+			// textBox2 Password textfield
 			// 
 			this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -128,7 +128,7 @@ namespace GUIpractice {
 			this->label_Re_Pass->TabIndex = 4;
 			this->label_Re_Pass->Text = L"Re-Enter Password:";
 			// 
-			// textBox3
+			// textBox3 Re-Enter Password textfield
 			// 
 			this->textBox3->Location = System::Drawing::Point(16, 143);
 			this->textBox3->Name = L"textBox3";
@@ -147,12 +147,13 @@ namespace GUIpractice {
 			this->label1->TabIndex = 6;
 			this->label1->Text = L"Security Question:";
 			// 
-			// textBox4
+			// textBox4 Security Answer textfield
 			// 
 			this->textBox4->Location = System::Drawing::Point(16, 216);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(170, 20);
 			this->textBox4->TabIndex = 7;
+			this->textBox4->TextChanged += gcnew System::EventHandler(this, &Register_Form::textBox4_TextChanged);
 			// 
 			// comboBox1
 			// 
@@ -262,6 +263,8 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 
 			}
 		}
+}
+private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

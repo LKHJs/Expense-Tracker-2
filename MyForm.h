@@ -108,7 +108,7 @@ namespace GUIpractice {
 			this->buttonRegi = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
-			// buttonLogin
+			// buttonLogin Login button
 			// 
 			this->buttonLogin->Location = System::Drawing::Point(32, 156);
 			this->buttonLogin->Name = L"buttonLogin";
@@ -118,7 +118,7 @@ namespace GUIpractice {
 			this->buttonLogin->UseVisualStyleBackColor = true;
 			this->buttonLogin->Click += gcnew System::EventHandler(this, &MyForm::buttonLogin_Click);
 			// 
-			// buttonForPas
+			// buttonForPas Forgot Password button
 			// 
 			this->buttonForPas->ForeColor = System::Drawing::SystemColors::ControlText;
 			this->buttonForPas->Location = System::Drawing::Point(32, 187);
@@ -153,7 +153,7 @@ namespace GUIpractice {
 			this->labelPWORD->Text = L"Password";
 			this->labelPWORD->Click += gcnew System::EventHandler(this, &MyForm::Label2_Click);
 			// 
-			// textBoxUNAME
+			// textBoxUNAME username textbox
 			// 
 			this->textBoxUNAME->Location = System::Drawing::Point(32, 77);
 			this->textBoxUNAME->Name = L"textBoxUNAME";
@@ -161,7 +161,7 @@ namespace GUIpractice {
 			this->textBoxUNAME->TabIndex = 4;
 			this->textBoxUNAME->TextChanged += gcnew System::EventHandler(this, &MyForm::TextBox1_TextChanged);
 			// 
-			// textBoxPWORD
+			// textBoxPWORD Password textbox
 			// 
 			this->textBoxPWORD->Location = System::Drawing::Point(32, 123);
 			this->textBoxPWORD->Name = L"textBoxPWORD";
@@ -169,7 +169,7 @@ namespace GUIpractice {
 			this->textBoxPWORD->TabIndex = 5;
 			this->textBoxPWORD->TextChanged += gcnew System::EventHandler(this, &MyForm::textBoxPWORD_TextChanged);
 			// 
-			// buttonRegi
+			// buttonRegi Register button
 			// 
 			this->buttonRegi->Location = System::Drawing::Point(129, 156);
 			this->buttonRegi->Name = L"buttonRegi";

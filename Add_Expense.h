@@ -125,7 +125,7 @@ namespace GUIpractice {
 			this->label3->TabIndex = 4;
 			this->label3->Text = L"Category: ";
 			// 
-			// textBox4
+			// textBox4 Date Field
 			// 
 			this->textBox4->Location = System::Drawing::Point(16, 212);
 			this->textBox4->Name = L"textBox4";
@@ -145,7 +145,7 @@ namespace GUIpractice {
 			this->label4->TabIndex = 7;
 			this->label4->Text = L"Date Created:";
 			// 
-			// button1
+			// button1 Submit 
 			// 
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -157,7 +157,7 @@ namespace GUIpractice {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Add_Expense::Button1_Click);
 			// 
-			// button2
+			// button2 Cancel
 			// 
 			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -169,7 +169,7 @@ namespace GUIpractice {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &Add_Expense::Button2_Click);
 			// 
-			// comboBox1
+			// comboBox1 Category list
 			// 
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"General ", L"Transportation", L"Personal", L"Buisness" });
@@ -211,7 +211,7 @@ private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e
 	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense(expense_name,expense_amount,expense_attribute,expense_date)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date)", con);
 	cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
 	cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
-	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedText);
+	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Text);
 	//converting expense date to sql readable date
 	DateTime expenseDate = DateTime::Parse(this->textBox4->Text);
 	cmd->Parameters->AddWithValue("@expense_date", expenseDate);

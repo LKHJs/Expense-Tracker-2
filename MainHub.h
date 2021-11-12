@@ -84,7 +84,7 @@ namespace GUIpractice {
 			this->label1->Text = L"Recent Expenses";
 			this->label1->Click += gcnew System::EventHandler(this, &MainHub::label1_Click);
 			// 
-			// addExpButton
+			// addExpButton add expense button
 			// 
 			this->addExpButton->Location = System::Drawing::Point(285, 35);
 			this->addExpButton->Name = L"addExpButton";
@@ -94,17 +94,17 @@ namespace GUIpractice {
 			this->addExpButton->UseVisualStyleBackColor = true;
 			this->addExpButton->Click += gcnew System::EventHandler(this, &MainHub::addExpButton_Click);
 			// 
-			// button2
+			// button2 Update Button
 			// 
 			this->button2->Location = System::Drawing::Point(92, 265);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(105, 23);
 			this->button2->TabIndex = 3;
-			this->button2->Text = L"Show Expenses";
+			this->button2->Text = L"Update";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainHub::button2_Click);
 			// 
-			// button3
+			// button3 Delete button
 			// 
 			this->button3->Location = System::Drawing::Point(285, 80);
 			this->button3->Name = L"button3";
