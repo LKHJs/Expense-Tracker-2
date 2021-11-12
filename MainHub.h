@@ -17,9 +17,22 @@ namespace GUIpractice {
 	public ref class MainHub : public System::Windows::Forms::Form
 	{
 	public:
+		String^ username;
+
+
+	public:
 		MainHub(void)
 		{
 			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+
+		MainHub(String ^user)
+		{
+			InitializeComponent();
+			username = user;
 			//
 			//TODO: Add the constructor code here
 			//
@@ -147,8 +160,10 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 	dataGridView1->DataSource = 0;
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense ",con);
+		
+
 		DataTable^ table = gcnew DataTable();
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
 		adapter->Fill(table);
 		dataGridView1->DataSource = table;
 		con->Close();

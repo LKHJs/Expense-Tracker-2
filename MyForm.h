@@ -4,7 +4,6 @@
 #include "MainHub.h"
 
 namespace GUIpractice {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -256,10 +255,11 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	cmd->ExecuteNonQuery(); //execute command
 	SqlDataReader^ rd = cmd->ExecuteReader(); 
 	
+	
 	//if SqlDataReader contains one or more rows login was successful
 	if (rd->HasRows) {
 		MessageBox::Show("Login Successful");
-		MainHub^ mainHubForm = gcnew MainHub; // Creates form to be open next
+		MainHub^ mainHubForm = gcnew MainHub(textBoxUNAME->Text); // Creates form to be open next
 		this->Hide(); //hide current form
 		mainHubForm->ShowDialog(); // Opens next form
 		this->Show();// If next form is closed. Opens previous form. (This form.)
