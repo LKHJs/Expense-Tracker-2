@@ -18,8 +18,10 @@ namespace GUIpractice {
 	/// </summary>
 	public ref class MainHub : public System::Windows::Forms::Form
 	{
-	public:
+	private:
 		String^ username;
+		// Create table to be used
+		DataTable^ table = gcnew DataTable();
 
 
 	public:
@@ -35,6 +37,17 @@ namespace GUIpractice {
 		{
 			InitializeComponent();
 			username = user;
+			dataGridView1->DataSource = 0;
+			// Connects to server
+			SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+			con->Open();
+			// Gets desired data for table
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+			// Fills table with desired data
+			adapter->Fill(table);
+			dataGridView1->DataSource = table;
+			// Closes connection
+			con->Close();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -86,27 +99,31 @@ namespace GUIpractice {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(12, 35);
+			this->dataGridView1->Location = System::Drawing::Point(16, 43);
+			this->dataGridView1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(267, 224);
+			this->dataGridView1->RowHeadersWidth = 51;
+			this->dataGridView1->Size = System::Drawing::Size(596, 276);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainHub::dataGridView1_CellContentClick);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(79, 9);
+			this->label1->Location = System::Drawing::Point(235, 9);
+			this->label1->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(91, 13);
+			this->label1->Size = System::Drawing::Size(118, 17);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Recent Expenses";
 			this->label1->Click += gcnew System::EventHandler(this, &MainHub::label1_Click);
 			// 
 			// addExpButton
 			// 
-			this->addExpButton->Location = System::Drawing::Point(285, 35);
+			this->addExpButton->Location = System::Drawing::Point(620, 43);
+			this->addExpButton->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->addExpButton->Name = L"addExpButton";
-			this->addExpButton->Size = System::Drawing::Size(96, 23);
+			this->addExpButton->Size = System::Drawing::Size(128, 28);
 			this->addExpButton->TabIndex = 2;
 			this->addExpButton->Text = L"Add Expense";
 			this->addExpButton->UseVisualStyleBackColor = true;
@@ -114,9 +131,10 @@ namespace GUIpractice {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(92, 265);
+			this->button2->Location = System::Drawing::Point(228, 327);
+			this->button2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(105, 23);
+			this->button2->Size = System::Drawing::Size(140, 28);
 			this->button2->TabIndex = 3;
 			this->button2->Text = L"Show Expenses";
 			this->button2->UseVisualStyleBackColor = true;
@@ -124,9 +142,10 @@ namespace GUIpractice {
 			// 
 			// deleteExp
 			// 
-			this->deleteExp->Location = System::Drawing::Point(285, 80);
+			this->deleteExp->Location = System::Drawing::Point(620, 98);
+			this->deleteExp->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->deleteExp->Name = L"deleteExp";
-			this->deleteExp->Size = System::Drawing::Size(96, 23);
+			this->deleteExp->Size = System::Drawing::Size(128, 28);
 			this->deleteExp->TabIndex = 4;
 			this->deleteExp->Text = L"Delete Expense";
 			this->deleteExp->UseVisualStyleBackColor = true;
@@ -134,9 +153,10 @@ namespace GUIpractice {
 			// 
 			// updateExp
 			// 
-			this->updateExp->Location = System::Drawing::Point(285, 127);
+			this->updateExp->Location = System::Drawing::Point(620, 156);
+			this->updateExp->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->updateExp->Name = L"updateExp";
-			this->updateExp->Size = System::Drawing::Size(96, 26);
+			this->updateExp->Size = System::Drawing::Size(128, 32);
 			this->updateExp->TabIndex = 5;
 			this->updateExp->Text = L"Update Expense";
 			this->updateExp->UseVisualStyleBackColor = true;
@@ -144,15 +164,16 @@ namespace GUIpractice {
 			// 
 			// MainHub
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(584, 394);
+			this->ClientSize = System::Drawing::Size(779, 485);
 			this->Controls->Add(this->updateExp);
 			this->Controls->Add(this->deleteExp);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->addExpButton);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dataGridView1);
+			this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			this->Name = L"MainHub";
 			this->Text = L"MainHub";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
@@ -161,6 +182,10 @@ namespace GUIpractice {
 
 		}
 #pragma endregion
+		private: System::Void MainHub_Load(System::Object^ sender, System::EventArgs^ e) {
+			
+			dataGridView1->DataSource = table;
+		}
 	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 		
 	}
@@ -170,24 +195,24 @@ namespace GUIpractice {
 		Add_Expense^ addExpForm = gcnew Add_Expense(username); // Creates next form.
 		this->Hide(); // Hides current form.
 		addExpForm->ShowDialog(); // Displays next form
-		this->Show(); // Displays current form.
-	}
-private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	dataGridView1->DataSource = 0;
+		table->Clear();
+		dataGridView1->DataSource = 0;
+		// Updates Table after change.
 		// Connects to server
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
-		
-		// Creates Table
-		DataTable^ table = gcnew DataTable();
+
 		// Gets desired data for table
 		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
 		// Fills table with desired data
 		adapter->Fill(table);
-		// Displays table in grid.
 		dataGridView1->DataSource = table;
 		// Closes connection
 		con->Close();
+		this->Show(); // Displays current form.
+	}
+private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	
 }
 
 	   //Delete Expense BUtton Click Event Handler 
@@ -198,8 +223,23 @@ private: System::Void deleteExp_Click(System::Object^ sender, System::EventArgs^
 
 	   //Update Expense BUtton Click Event Handler 
 private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^ e) {
-	UpdateExpense^ updExpFrm = gcnew UpdateExpense;
+	UpdateExpense^ updExpFrm = gcnew UpdateExpense(username);
 	updExpFrm->ShowDialog();
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Updates Table after change.
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
+	// Closes connection
+	con->Close();
+	this->Show(); // Displays current form.
 }
 
 };

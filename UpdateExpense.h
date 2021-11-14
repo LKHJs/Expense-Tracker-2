@@ -16,9 +16,19 @@ namespace GUIpractice {
 	public ref class UpdateExpense : public System::Windows::Forms::Form
 	{
 	public:
+		String^ username;
+	public:
 		UpdateExpense(void)
 		{
 			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+		UpdateExpense(String ^user)
+		{
+			InitializeComponent();
+			username = user;
 			//
 			//TODO: Add the constructor code here
 			//
@@ -140,7 +150,7 @@ namespace GUIpractice {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(196, 20);
 			this->textBox2->TabIndex = 7;
-			this->textBox2->Text = L"DD/MM/YYYY";
+			this->textBox2->Text = L"MM/DD/YYYY";
 			// 
 			// button1
 			// 
@@ -209,29 +219,35 @@ namespace GUIpractice {
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
 		//////////////Insert data into table///////////////
-		SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense(expense_name,expense_amount,expense_attribute,expense_date)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date)", con);
+		SqlCommand^ cmd = gcnew SqlCommand("UPDATE [expTrackerApp].[dbo].[expense2] SET expense_amount=(@expense_amount), expense_attribute=(@expense_attribute), expense_date=(@expense_date) WHERE expense_Name=(@expense_name) AND user_name='" + username + "'", con);
 		cmd->Parameters->AddWithValue("@expense_name", textBox_Name->Text);
 		cmd->Parameters->AddWithValue("@expense_amount", textBox_Amount->Text);
-		cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedText);
+		cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Text);
 		//converting expense date to sql readable date
 		DateTime expenseDate = DateTime::Parse(this->textBox2->Text);
 		cmd->Parameters->AddWithValue("@expense_date", expenseDate);
-
-		cmd->ExecuteNonQuery();
-		SqlDataReader^ rd = cmd->ExecuteReader();
-		//if registration is successful
-		if (rd->RecordsAffected) {
-			MessageBox::Show("Expense Updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-			//transition back to login form
-			Form::Close();
-			rd->Close();
+		if (textBox_Name->Text == "" || textBox_Amount->Text == "" || comboBox1->Text == "")
+		{
+			MessageBox::Show("Please fill input boxes.");
 			con->Close();
 		}
-		else {
-			//if query or connection fail
-			MessageBox::Show("Error. Query Connection Failed", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			rd->Close();
-			con->Close();
+		else
+		{
+			SqlDataReader^ rd = cmd->ExecuteReader();
+			//if registration is successful
+			if (rd->RecordsAffected) {
+				MessageBox::Show("Expense Updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				//transition back to login form
+				Form::Close();
+				rd->Close();
+				con->Close();
+			}
+			else {
+				//if query or connection fail
+				MessageBox::Show("Error. Query Connection Failed", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				rd->Close();
+				con->Close();
+			}
 		}
 	}
 	};

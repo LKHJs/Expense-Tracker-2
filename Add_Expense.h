@@ -139,7 +139,7 @@ namespace GUIpractice {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(197, 20);
 			this->textBox4->TabIndex = 6;
-			this->textBox4->Text = L"DD/MM/YYYY";
+			this->textBox4->Text = L"MM/DD/YYYY";
 			this->textBox4->TextChanged += gcnew System::EventHandler(this, &Add_Expense::textBox4_TextChanged);
 			// 
 			// label4
