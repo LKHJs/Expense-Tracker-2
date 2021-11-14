@@ -59,6 +59,12 @@ namespace GUIpractice {
 	private: System::Windows::Forms::Button^ deleteExp;
 
 	private: System::Windows::Forms::Button^ updateExp;
+	private: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::RadioButton^ radioButton4;
+	private: System::Windows::Forms::RadioButton^ radioButton3;
+	private: System::Windows::Forms::RadioButton^ radioButton2;
+	private: System::Windows::Forms::RadioButton^ radioButton1;
+
 	protected:
 
 	private:
@@ -80,7 +86,13 @@ namespace GUIpractice {
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->deleteExp = (gcnew System::Windows::Forms::Button());
 			this->updateExp = (gcnew System::Windows::Forms::Button());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
+			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// dataGridView1
@@ -88,14 +100,14 @@ namespace GUIpractice {
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(12, 35);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(267, 224);
+			this->dataGridView1->Size = System::Drawing::Size(318, 277);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainHub::dataGridView1_CellContentClick);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(79, 9);
+			this->label1->Location = System::Drawing::Point(118, 19);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(91, 13);
 			this->label1->TabIndex = 1;
@@ -104,7 +116,7 @@ namespace GUIpractice {
 			// 
 			// addExpButton
 			// 
-			this->addExpButton->Location = System::Drawing::Point(285, 35);
+			this->addExpButton->Location = System::Drawing::Point(336, 35);
 			this->addExpButton->Name = L"addExpButton";
 			this->addExpButton->Size = System::Drawing::Size(96, 23);
 			this->addExpButton->TabIndex = 2;
@@ -114,7 +126,7 @@ namespace GUIpractice {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(92, 265);
+			this->button2->Location = System::Drawing::Point(121, 318);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(105, 23);
 			this->button2->TabIndex = 3;
@@ -124,7 +136,7 @@ namespace GUIpractice {
 			// 
 			// deleteExp
 			// 
-			this->deleteExp->Location = System::Drawing::Point(285, 80);
+			this->deleteExp->Location = System::Drawing::Point(336, 64);
 			this->deleteExp->Name = L"deleteExp";
 			this->deleteExp->Size = System::Drawing::Size(96, 23);
 			this->deleteExp->TabIndex = 4;
@@ -134,7 +146,7 @@ namespace GUIpractice {
 			// 
 			// updateExp
 			// 
-			this->updateExp->Location = System::Drawing::Point(285, 127);
+			this->updateExp->Location = System::Drawing::Point(336, 93);
 			this->updateExp->Name = L"updateExp";
 			this->updateExp->Size = System::Drawing::Size(96, 26);
 			this->updateExp->TabIndex = 5;
@@ -142,11 +154,71 @@ namespace GUIpractice {
 			this->updateExp->UseVisualStyleBackColor = true;
 			this->updateExp->Click += gcnew System::EventHandler(this, &MainHub::updateExp_Click);
 			// 
+			// panel1
+			// 
+			this->panel1->Controls->Add(this->radioButton4);
+			this->panel1->Controls->Add(this->radioButton3);
+			this->panel1->Controls->Add(this->radioButton2);
+			this->panel1->Controls->Add(this->radioButton1);
+			this->panel1->Location = System::Drawing::Point(336, 160);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(120, 111);
+			this->panel1->TabIndex = 6;
+			// 
+			// radioButton1
+			// 
+			this->radioButton1->AutoSize = true;
+			this->radioButton1->Location = System::Drawing::Point(3, 12);
+			this->radioButton1->Name = L"radioButton1";
+			this->radioButton1->Size = System::Drawing::Size(113, 17);
+			this->radioButton1->TabIndex = 0;
+			this->radioButton1->TabStop = true;
+			this->radioButton1->Text = L"Sort by Last Week";
+			this->radioButton1->UseVisualStyleBackColor = true;
+			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton1_CheckedChanged);
+			// 
+			// radioButton2
+			// 
+			this->radioButton2->AutoSize = true;
+			this->radioButton2->Location = System::Drawing::Point(3, 35);
+			this->radioButton2->Name = L"radioButton2";
+			this->radioButton2->Size = System::Drawing::Size(114, 17);
+			this->radioButton2->TabIndex = 1;
+			this->radioButton2->TabStop = true;
+			this->radioButton2->Text = L"Sort by Last Month";
+			this->radioButton2->UseVisualStyleBackColor = true;
+			this->radioButton2->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton2_CheckedChanged);
+			// 
+			// radioButton3
+			// 
+			this->radioButton3->AutoSize = true;
+			this->radioButton3->Location = System::Drawing::Point(3, 58);
+			this->radioButton3->Name = L"radioButton3";
+			this->radioButton3->Size = System::Drawing::Size(113, 17);
+			this->radioButton3->TabIndex = 2;
+			this->radioButton3->TabStop = true;
+			this->radioButton3->Text = L"Sort by Weekends";
+			this->radioButton3->UseVisualStyleBackColor = true;
+			this->radioButton3->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton3_CheckedChanged);
+			// 
+			// radioButton4
+			// 
+			this->radioButton4->AutoSize = true;
+			this->radioButton4->Location = System::Drawing::Point(3, 81);
+			this->radioButton4->Name = L"radioButton4";
+			this->radioButton4->Size = System::Drawing::Size(112, 17);
+			this->radioButton4->TabIndex = 3;
+			this->radioButton4->TabStop = true;
+			this->radioButton4->Text = L"Sort by Weekdays";
+			this->radioButton4->UseVisualStyleBackColor = true;
+			this->radioButton4->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton4_CheckedChanged);
+			// 
 			// MainHub
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(584, 394);
+			this->ClientSize = System::Drawing::Size(457, 412);
+			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->updateExp);
 			this->Controls->Add(this->deleteExp);
 			this->Controls->Add(this->button2);
@@ -156,6 +228,8 @@ namespace GUIpractice {
 			this->Name = L"MainHub";
 			this->Text = L"MainHub";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -180,10 +254,13 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 		
 		// Creates Table
 		DataTable^ table = gcnew DataTable();
+
 		// Gets desired data for table
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name='" + username + "'", con);
+		
 		// Fills table with desired data
 		adapter->Fill(table);
+		
 		// Displays table in grid.
 		dataGridView1->DataSource = table;
 		// Closes connection
@@ -202,5 +279,15 @@ private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^
 	updExpFrm->ShowDialog();
 }
 
+private: System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void radioButton2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void radioButton4_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void radioButton3_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }
