@@ -247,6 +247,19 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	//create query for login credential verification
 	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name) AND user_password=(@user_password)", con);
 
+	//make sure eusername is not empty
+	if (String::IsNullOrEmpty(textBoxUNAME->Text))
+	{
+		MessageBox::Show("Error. Username field cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		//con->Close();
+	}
+	//make sure password field is not empty
+	else if (String::IsNullOrEmpty(textBoxPWORD->Text))
+	{
+		MessageBox::Show("Error. Password field cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		//con->Close();
+	}
+
 	/******passing sql query values by parameter because concatenated sql queries are vulnerable to sql injection attacks******/
 	cmd->Parameters->AddWithValue("@user_name", textBoxUNAME->Text);
 	cmd->Parameters->AddWithValue("@user_password", textBoxPWORD->Text);
