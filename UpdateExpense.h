@@ -29,6 +29,14 @@ namespace GUIpractice {
 		{
 			InitializeComponent();
 			username = user;
+			dataGridView1->DataSource = 0;
+			SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+			con->Open();
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense ", con);
+			DataTable^ table = gcnew DataTable();
+			adapter->Fill(table);
+			dataGridView1->DataSource = table;
+			con->Close();
 			//
 			//TODO: Add the constructor code here
 			//
@@ -57,6 +65,8 @@ namespace GUIpractice {
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::ComboBox^ comboBox1;
+	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Button^ button3;
 	protected:
 
 	private:
@@ -82,6 +92,9 @@ namespace GUIpractice {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->button3 = (gcnew System::Windows::Forms::Button());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -150,7 +163,7 @@ namespace GUIpractice {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(196, 20);
 			this->textBox2->TabIndex = 7;
-			this->textBox2->Text = L"MM/DD/YYYY";
+			this->textBox2->Text = L"DD/MM/YYYY";
 			// 
 			// button1
 			// 
@@ -186,11 +199,31 @@ namespace GUIpractice {
 			this->comboBox1->TabIndex = 10;
 			this->comboBox1->Text = L"None";
 			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Location = System::Drawing::Point(299, 36);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(306, 246);
+			this->dataGridView1->TabIndex = 11;
+			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &UpdateExpense::DataGridView1_CellContentClick);
+			// 
+			// button3
+			// 
+			this->button3->Location = System::Drawing::Point(496, 288);
+			this->button3->Name = L"button3";
+			this->button3->Size = System::Drawing::Size(109, 37);
+			this->button3->TabIndex = 12;
+			this->button3->Text = L"Refresh";
+			this->button3->UseVisualStyleBackColor = true;
+			// 
 			// UpdateExpense
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(348, 407);
+			this->ClientSize = System::Drawing::Size(626, 379);
+			this->Controls->Add(this->button3);
+			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
@@ -203,6 +236,7 @@ namespace GUIpractice {
 			this->Controls->Add(this->label1);
 			this->Name = L"UpdateExpense";
 			this->Text = L"UpdateExpense";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -250,5 +284,10 @@ namespace GUIpractice {
 			}
 		}
 	}
-	};
+private: System::Void DataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+
+	
+
+}
+};
 }

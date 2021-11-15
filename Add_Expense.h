@@ -1,5 +1,5 @@
 #pragma once
-
+#include <ctime>
 namespace GUIpractice {
 
 	using namespace System;
@@ -15,8 +15,10 @@ namespace GUIpractice {
 	/// </summary>
 	public ref class Add_Expense : public System::Windows::Forms::Form
 	{
-	public:
+	private:
 		String^ username;
+		DateTime localDate = DateTime::Now;
+		String^ dateString = localDate.ToString("MM/dd/yyyy");
 	public:
 		Add_Expense(void)
 		{
@@ -30,6 +32,7 @@ namespace GUIpractice {
 		{
 			InitializeComponent();
 			username = user;
+
 		}
 
 	protected:
@@ -139,7 +142,7 @@ namespace GUIpractice {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(197, 20);
 			this->textBox4->TabIndex = 6;
-			this->textBox4->Text = L"MM/DD/YYYY";
+			this->textBox4->Text = dateString;
 			this->textBox4->TextChanged += gcnew System::EventHandler(this, &Add_Expense::textBox4_TextChanged);
 			// 
 			// label4
