@@ -220,10 +220,19 @@ private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e
 	con->Open();
 	//////////////Insert data into table///////////////
 	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense2(expense_name,expense_amount,expense_attribute,expense_date, user_name)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date,@user_name)", con);
+	
+	//make sure expense data has atleast a name
+	if (String::IsNullOrEmpty(textBox1->Text))
+	{
+		MessageBox::Show("Error. Expense name cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		//con->Close();
+	}
+
 	cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
 	cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
 	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Text);
 	cmd->Parameters->AddWithValue("@user_name", username);
+
 	//converting expense date to sql readable date
 	DateTime expenseDate = DateTime::Parse(this->textBox4->Text);
 	cmd->Parameters->AddWithValue("@expense_date", expenseDate);
