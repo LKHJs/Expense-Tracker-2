@@ -273,7 +273,7 @@ namespace GUIpractice {
 
 		// Gets desired data for table
 		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name='" + username + "'", con);
-		
+	
 		// Fills table with desired data
 		adapter->Fill(table);
 		dataGridView1->DataSource = table;

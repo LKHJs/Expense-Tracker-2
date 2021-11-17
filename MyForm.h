@@ -17,6 +17,11 @@ namespace GUIpractice {
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+	private:
+		String^ username;
+		// Create table to be used
+		DataTable^ table = gcnew DataTable();
+
 	public:
 		MyForm(void)
 		{
