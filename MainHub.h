@@ -41,8 +41,11 @@ namespace GUIpractice {
 			// Connects to server
 			SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 			con->Open();
+
 			// Gets desired data for table
-			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+			adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+			
 			// Fills table with desired data
 			adapter->Fill(table);
 			dataGridView1->DataSource = table;
@@ -272,7 +275,8 @@ namespace GUIpractice {
 		con->Open();
 
 		// Gets desired data for table
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name='" + username + "'", con);
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+		adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 	
 		// Fills table with desired data
 		adapter->Fill(table);
@@ -302,8 +306,11 @@ private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^
 	// Connects to server
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
+
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
 	// Fills table with desired data
 	adapter->Fill(table);
 	dataGridView1->DataSource = table;
