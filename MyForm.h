@@ -279,15 +279,29 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		MainHub^ mainHubForm = gcnew MainHub(textBoxUNAME->Text); // Creates form to be open next
 		this->Hide(); //hide current form
 		mainHubForm->ShowDialog(); // Opens next form
+		
 		this->Show();// If next form is closed. Opens previous form. (This form.)
 		rd->Close();
 		con->Close();
+
+		//for security clearing crendtial textboxes incase a return to the login screen occurs after successful login
+		textBoxUNAME->Clear();
+		textBoxPWORD->Clear();
 	}
 	else {
-		MessageBox::Show("Error. Login Attempt Failed");
+		MessageBox::Show("Wrong Username or Password. Login Attempt Failed");
 		rd->Close();
 		con->Close();
+
+		//clearing credential textboxes
+		textBoxUNAME->Clear();
+		textBoxPWORD->Clear();
 	}
+
+	//clearing credential textboxes
+	textBoxUNAME->Clear();
+	textBoxPWORD->Clear();
+
 	rd->Close();
 	con->Close();
 }
