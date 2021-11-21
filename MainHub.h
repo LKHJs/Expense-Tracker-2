@@ -41,8 +41,11 @@ namespace GUIpractice {
 			// Connects to server
 			SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 			con->Open();
+
 			// Gets desired data for table
-			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+			adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+			
 			// Fills table with desired data
 			adapter->Fill(table);
 			dataGridView1->DataSource = table;
@@ -73,10 +76,16 @@ namespace GUIpractice {
 
 	private: System::Windows::Forms::Button^ updateExp;
 	private: System::Windows::Forms::Panel^ panel1;
-	private: System::Windows::Forms::RadioButton^ radioButton4;
-	private: System::Windows::Forms::RadioButton^ radioButton3;
-	private: System::Windows::Forms::RadioButton^ radioButton2;
-	private: System::Windows::Forms::RadioButton^ radioButton1;
+	private: System::Windows::Forms::RadioButton^ sort6Months;
+
+	private: System::Windows::Forms::RadioButton^ sort3Months;
+
+
+
+	private: System::Windows::Forms::RadioButton^ sortLastMonth;
+
+	private: System::Windows::Forms::RadioButton^ sortLastWeek;
+
 
 	protected:
 
@@ -100,10 +109,10 @@ namespace GUIpractice {
 			this->deleteExp = (gcnew System::Windows::Forms::Button());
 			this->updateExp = (gcnew System::Windows::Forms::Button());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->radioButton4 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->sort6Months = (gcnew System::Windows::Forms::RadioButton());
+			this->sort3Months = (gcnew System::Windows::Forms::RadioButton());
+			this->sortLastMonth = (gcnew System::Windows::Forms::RadioButton());
+			this->sortLastWeek = (gcnew System::Windows::Forms::RadioButton());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
@@ -111,29 +120,30 @@ namespace GUIpractice {
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(16, 43);
-			this->dataGridView1->Margin = System::Windows::Forms::Padding(4);
+			this->dataGridView1->Location = System::Drawing::Point(12, 35);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersWidth = 51;
-			this->dataGridView1->Size = System::Drawing::Size(585, 277);
+			this->dataGridView1->Size = System::Drawing::Size(439, 225);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainHub::dataGridView1_CellContentClick);
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(260, 22);
+			this->label1->Location = System::Drawing::Point(195, 18);
+			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(118, 17);
+			this->label1->Size = System::Drawing::Size(91, 13);
 			this->label1->TabIndex = 1;
 			this->label1->Text = L"Recent Expenses";
 			this->label1->Click += gcnew System::EventHandler(this, &MainHub::label1_Click);
 			// 
 			// addExpButton
 			// 
-			this->addExpButton->Location = System::Drawing::Point(608, 43);
+			this->addExpButton->Location = System::Drawing::Point(456, 35);
+			this->addExpButton->Margin = System::Windows::Forms::Padding(2);
 			this->addExpButton->Name = L"addExpButton";
-			this->addExpButton->Size = System::Drawing::Size(128, 28);
+			this->addExpButton->Size = System::Drawing::Size(96, 23);
 			this->addExpButton->TabIndex = 2;
 			this->addExpButton->Text = L"Add Expense";
 			this->addExpButton->UseVisualStyleBackColor = true;
@@ -141,19 +151,21 @@ namespace GUIpractice {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(250, 327);
+			this->button2->Location = System::Drawing::Point(188, 266);
+			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(140, 28);
+			this->button2->Size = System::Drawing::Size(105, 23);
 			this->button2->TabIndex = 3;
-			this->button2->Text = L"Show Expenses";
+			this->button2->Text = L"Refresh";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &MainHub::button2_Click);
 			// 
 			// deleteExp
 			// 
-			this->deleteExp->Location = System::Drawing::Point(608, 72);
+			this->deleteExp->Location = System::Drawing::Point(456, 58);
+			this->deleteExp->Margin = System::Windows::Forms::Padding(2);
 			this->deleteExp->Name = L"deleteExp";
-			this->deleteExp->Size = System::Drawing::Size(128, 28);
+			this->deleteExp->Size = System::Drawing::Size(96, 23);
 			this->deleteExp->TabIndex = 4;
 			this->deleteExp->Text = L"Delete Expense";
 			this->deleteExp->UseVisualStyleBackColor = true;
@@ -161,9 +173,10 @@ namespace GUIpractice {
 			// 
 			// updateExp
 			// 
-			this->updateExp->Location = System::Drawing::Point(608, 101);
+			this->updateExp->Location = System::Drawing::Point(456, 82);
+			this->updateExp->Margin = System::Windows::Forms::Padding(2);
 			this->updateExp->Name = L"updateExp";
-			this->updateExp->Size = System::Drawing::Size(128, 32);
+			this->updateExp->Size = System::Drawing::Size(96, 26);
 			this->updateExp->TabIndex = 5;
 			this->updateExp->Text = L"Update Expense";
 			this->updateExp->UseVisualStyleBackColor = true;
@@ -171,68 +184,74 @@ namespace GUIpractice {
 			// 
 			// panel1
 			// 
-			this->panel1->Controls->Add(this->radioButton4);
-			this->panel1->Controls->Add(this->radioButton3);
-			this->panel1->Controls->Add(this->radioButton2);
-			this->panel1->Controls->Add(this->radioButton1);
-			this->panel1->Location = System::Drawing::Point(608, 160);
+			this->panel1->Controls->Add(this->sort6Months);
+			this->panel1->Controls->Add(this->sort3Months);
+			this->panel1->Controls->Add(this->sortLastMonth);
+			this->panel1->Controls->Add(this->sortLastWeek);
+			this->panel1->Location = System::Drawing::Point(456, 130);
+			this->panel1->Margin = System::Windows::Forms::Padding(2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(162, 111);
+			this->panel1->Size = System::Drawing::Size(132, 90);
 			this->panel1->TabIndex = 6;
 			// 
-			// radioButton4
+			// sort6Months
 			// 
-			this->radioButton4->AutoSize = true;
-			this->radioButton4->Location = System::Drawing::Point(3, 81);
-			this->radioButton4->Name = L"radioButton4";
-			this->radioButton4->Size = System::Drawing::Size(144, 21);
-			this->radioButton4->TabIndex = 3;
-			this->radioButton4->TabStop = true;
-			this->radioButton4->Text = L"Sort by Weekdays";
-			this->radioButton4->UseVisualStyleBackColor = true;
-			this->radioButton4->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton4_CheckedChanged);
+			this->sort6Months->AutoSize = true;
+			this->sort6Months->Location = System::Drawing::Point(2, 66);
+			this->sort6Months->Margin = System::Windows::Forms::Padding(2);
+			this->sort6Months->Name = L"sort6Months";
+			this->sort6Months->Size = System::Drawing::Size(128, 17);
+			this->sort6Months->TabIndex = 3;
+			this->sort6Months->TabStop = true;
+			this->sort6Months->Text = L"Sort by Last 6 Months";
+			this->sort6Months->UseVisualStyleBackColor = true;
+			this->sort6Months->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sort6Months_CheckedChanged);
 			// 
-			// radioButton3
+			// sort3Months
 			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Location = System::Drawing::Point(3, 58);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(145, 21);
-			this->radioButton3->TabIndex = 2;
-			this->radioButton3->TabStop = true;
-			this->radioButton3->Text = L"Sort by Weekends";
-			this->radioButton3->UseVisualStyleBackColor = true;
-			this->radioButton3->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton3_CheckedChanged);
+			this->sort3Months->AllowDrop = true;
+			this->sort3Months->AutoSize = true;
+			this->sort3Months->Location = System::Drawing::Point(2, 47);
+			this->sort3Months->Margin = System::Windows::Forms::Padding(2);
+			this->sort3Months->Name = L"sort3Months";
+			this->sort3Months->Size = System::Drawing::Size(128, 17);
+			this->sort3Months->TabIndex = 2;
+			this->sort3Months->TabStop = true;
+			this->sort3Months->Text = L"Sort by Last 3 Months";
+			this->sort3Months->UseVisualStyleBackColor = true;
+			this->sort3Months->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sort3Months_CheckedChanged);
 			// 
-			// radioButton2
+			// sortLastMonth
 			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(3, 35);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(148, 21);
-			this->radioButton2->TabIndex = 1;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"Sort by Last Month";
-			this->radioButton2->UseVisualStyleBackColor = true;
-			this->radioButton2->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton2_CheckedChanged);
+			this->sortLastMonth->AutoSize = true;
+			this->sortLastMonth->Location = System::Drawing::Point(2, 28);
+			this->sortLastMonth->Margin = System::Windows::Forms::Padding(2);
+			this->sortLastMonth->Name = L"sortLastMonth";
+			this->sortLastMonth->Size = System::Drawing::Size(114, 17);
+			this->sortLastMonth->TabIndex = 1;
+			this->sortLastMonth->TabStop = true;
+			this->sortLastMonth->Text = L"Sort by Last Month";
+			this->sortLastMonth->UseVisualStyleBackColor = true;
+			this->sortLastMonth->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sortLastMonth_CheckedChanged);
 			// 
-			// radioButton1
+			// sortLastWeek
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(3, 12);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(145, 21);
-			this->radioButton1->TabIndex = 0;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"Sort by Last Week";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &MainHub::radioButton1_CheckedChanged);
+			this->sortLastWeek->AutoSize = true;
+			this->sortLastWeek->Location = System::Drawing::Point(2, 10);
+			this->sortLastWeek->Margin = System::Windows::Forms::Padding(2);
+			this->sortLastWeek->Name = L"sortLastWeek";
+			this->sortLastWeek->Size = System::Drawing::Size(113, 17);
+			this->sortLastWeek->TabIndex = 0;
+			this->sortLastWeek->TabStop = true;
+			this->sortLastWeek->Text = L"Sort by Last Week";
+			this->sortLastWeek->UseVisualStyleBackColor = true;
+			this->sortLastWeek->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sortLastWeek_CheckedChanged);
 			// 
 			// MainHub
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(773, 412);
+			this->ClientSize = System::Drawing::Size(589, 335);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->updateExp);
 			this->Controls->Add(this->deleteExp);
@@ -240,7 +259,6 @@ namespace GUIpractice {
 			this->Controls->Add(this->addExpButton);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dataGridView1);
-			this->Margin = System::Windows::Forms::Padding(4);
 			this->Name = L"MainHub";
 			this->Text = L"MainHub";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
@@ -271,7 +289,9 @@ namespace GUIpractice {
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
 		// Gets desired data for table
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name='" + username + "'", con);
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+		adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+	
 		// Fills table with desired data
 		adapter->Fill(table);
 		dataGridView1->DataSource = table;
@@ -280,7 +300,20 @@ namespace GUIpractice {
 		this->Show(); // Displays current form.
 	}
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
-	
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Updates Table after change.
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
 }
 
 	   //Delete Expense BUtton Click Event Handler 
@@ -300,8 +333,11 @@ private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^
 	// Connects to server
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
+
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM [expTrackerApp].[dbo].[expense2] WHERE user_name='" + username + "'", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
 	// Fills table with desired data
 	adapter->Fill(table);
 	dataGridView1->DataSource = table;
@@ -312,13 +348,61 @@ private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^
 
 private: System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 }
-private: System::Void radioButton2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void sortLastMonth_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Updates Table after change.
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY DATEPART(month, expense_date) DESC", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
+	// Closes connection
+	con->Close();
 }
-private: System::Void radioButton4_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void sort6Months_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 }
-private: System::Void radioButton3_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void sort3Months_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Updates Table after change.
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY DATEPART(quarter, expense_date) DESC", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
+	// Closes connection
+	con->Close();
 }
-private: System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void sortLastWeek_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Updates Table after change.
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY DATEPART(week, expense_date) DESC", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
+	// Closes connection
+	con->Close();
 }
 };
 }
