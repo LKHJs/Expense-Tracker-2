@@ -25,6 +25,7 @@ namespace GUIpractice {
 			//
 		}
 
+
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
@@ -211,6 +212,10 @@ namespace GUIpractice {
 		}
 #pragma endregion
 	private: System::Void TextBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+
+		if (textBox3->Text != textBox2->Text) {
+			MessageBox::Show("Error. Passwords don't match.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 	}
 private: System::Void Button_Cancle_Click(System::Object^ sender, System::EventArgs^ e) {
 	Form::Close();
@@ -223,10 +228,30 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
 
+		//make sure username textfield is not empty 
+		if (String::IsNullOrEmpty(textBox1->Text))
+		{
+			MessageBox::Show("Error. Username cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			
+		}
+		//make sure password textfield is not empty 
+		else if (String::IsNullOrEmpty(textBox2->Text))
+		{
+			MessageBox::Show("Error. Password cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			
+		}
+		//make sure security answer textfield is not empty 
+		else if (String::IsNullOrEmpty(textBox4->Text))
+		{
+			MessageBox::Show("Error. Security answer cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 
-		//check if username exists
-		SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name='" + this->textBox1->Text + "';", con);
+		}
+
+		//sql command to check if username exists
+		SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name);", con);
+		uniqueUSRCHECK->Parameters->AddWithValue("@user_name", textBox1->Text);
 		SqlDataReader^ usrCheck = uniqueUSRCHECK->ExecuteReader();
+		//if username exists = error
 		if (usrCheck->HasRows) {
 			MessageBox::Show("Username Already exists! Please Try Again.");
 			usrCheck->Close();
@@ -238,6 +263,7 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 			if (this->textBox2->Text == this->textBox3->Text)
 			{
 				SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,security_answer)VALUES(@user_name,@user_password,@security_answer)", con);
+
 				cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
 				cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
 				cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
