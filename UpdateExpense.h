@@ -18,6 +18,7 @@ namespace GUIpractice {
 	private:
 		String^ username;
 		DateTime localDate = DateTime::Now;
+		/*******When and where is datestring used?*******/
 		String^ dateString = localDate.ToString("MM/dd/yyyy");
 		// Create table to be used
 		DataTable^ table = gcnew DataTable();
@@ -272,16 +273,21 @@ namespace GUIpractice {
 		Form::Close();
 	}
 	private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		
 		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 		con->Open();
-		//////////////Insert data into table///////////////
-		SqlCommand^ cmd = gcnew SqlCommand("UPDATE [expTrackerApp].[dbo].[expense2] SET expense_amount=(@expense_amount), expense_attribute=(@expense_attribute), expense_date=(@expense_date) WHERE expense_Name=(@expense_name) AND user_name='" + username + "'", con);
+
+		//Insert data into table
+		SqlCommand^ cmd = gcnew SqlCommand("UPDATE [expTrackerApp].[dbo].[expense2] SET expense_amount=(@expense_amount), expense_attribute=(@expense_attribute), expense_date=(@expense_date) WHERE expense_Name=(@expense_name) AND user_name=(@user_name)", con);
 		cmd->Parameters->AddWithValue("@expense_name", textBox_Name->Text);
 		cmd->Parameters->AddWithValue("@expense_amount", textBox_Amount->Text);
 		cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Text);
+		cmd->Parameters->AddWithValue("@user_name", username);
+		
 		//converting expense date to sql readable date
 		DateTime expenseDate = DateTime::Parse(this->textBox2->Text);
 		cmd->Parameters->AddWithValue("@expense_date", expenseDate);
+		
 		if (textBox_Name->Text == "" || textBox_Amount->Text == "" || comboBox1->Text == "")
 		{
 			MessageBox::Show("Please fill input boxes.");

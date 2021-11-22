@@ -19,7 +19,12 @@ namespace GUIpractice {
 	{
 	private:
 		String^ username;
-		// Create table to be used
+	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::TextBox^ textBoxPIN;
+
+
+
+		   // Create table to be used
 		DataTable^ table = gcnew DataTable();
 
 	public:
@@ -35,6 +40,10 @@ namespace GUIpractice {
 			//max password characters in text field
 			textBoxPWORD->MaxLength = 25;
 
+			//hide identity pin text in textfield and replace with asteriks for security reasons
+			textBoxPIN->PasswordChar = '*';
+			//max pin characters in text field
+			textBoxPIN->MaxLength = 4;
 		}
 		
 	protected:
@@ -110,11 +119,13 @@ namespace GUIpractice {
 			this->textBoxUNAME = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxPWORD = (gcnew System::Windows::Forms::TextBox());
 			this->buttonRegi = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->textBoxPIN = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
-			// buttonLogin Login button
+			// buttonLogin
 			// 
-			this->buttonLogin->Location = System::Drawing::Point(32, 156);
+			this->buttonLogin->Location = System::Drawing::Point(32, 204);
 			this->buttonLogin->Name = L"buttonLogin";
 			this->buttonLogin->Size = System::Drawing::Size(89, 25);
 			this->buttonLogin->TabIndex = 0;
@@ -122,10 +133,10 @@ namespace GUIpractice {
 			this->buttonLogin->UseVisualStyleBackColor = true;
 			this->buttonLogin->Click += gcnew System::EventHandler(this, &MyForm::buttonLogin_Click);
 			// 
-			// buttonForPas Forgot Password button
+			// buttonForPas
 			// 
 			this->buttonForPas->ForeColor = System::Drawing::SystemColors::ControlText;
-			this->buttonForPas->Location = System::Drawing::Point(32, 187);
+			this->buttonForPas->Location = System::Drawing::Point(32, 235);
 			this->buttonForPas->Name = L"buttonForPas";
 			this->buttonForPas->Size = System::Drawing::Size(186, 32);
 			this->buttonForPas->TabIndex = 1;
@@ -157,7 +168,7 @@ namespace GUIpractice {
 			this->labelPWORD->Text = L"Password";
 			this->labelPWORD->Click += gcnew System::EventHandler(this, &MyForm::Label2_Click);
 			// 
-			// textBoxUNAME username textbox
+			// textBoxUNAME
 			// 
 			this->textBoxUNAME->Location = System::Drawing::Point(32, 77);
 			this->textBoxUNAME->Name = L"textBoxUNAME";
@@ -165,7 +176,7 @@ namespace GUIpractice {
 			this->textBoxUNAME->TabIndex = 4;
 			this->textBoxUNAME->TextChanged += gcnew System::EventHandler(this, &MyForm::TextBox1_TextChanged);
 			// 
-			// textBoxPWORD Password textbox
+			// textBoxPWORD
 			// 
 			this->textBoxPWORD->Location = System::Drawing::Point(32, 123);
 			this->textBoxPWORD->Name = L"textBoxPWORD";
@@ -173,9 +184,9 @@ namespace GUIpractice {
 			this->textBoxPWORD->TabIndex = 5;
 			this->textBoxPWORD->TextChanged += gcnew System::EventHandler(this, &MyForm::textBoxPWORD_TextChanged);
 			// 
-			// buttonRegi Register button
+			// buttonRegi
 			// 
-			this->buttonRegi->Location = System::Drawing::Point(129, 156);
+			this->buttonRegi->Location = System::Drawing::Point(127, 204);
 			this->buttonRegi->Name = L"buttonRegi";
 			this->buttonRegi->Size = System::Drawing::Size(89, 25);
 			this->buttonRegi->TabIndex = 6;
@@ -183,12 +194,33 @@ namespace GUIpractice {
 			this->buttonRegi->UseVisualStyleBackColor = true;
 			this->buttonRegi->Click += gcnew System::EventHandler(this, &MyForm::ButtonRegi_Click);
 			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label1->Location = System::Drawing::Point(28, 151);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(87, 20);
+			this->label1->TabIndex = 7;
+			this->label1->Text = L"Identity Pin";
+			// 
+			// textBoxPIN
+			// 
+			this->textBoxPIN->Location = System::Drawing::Point(32, 174);
+			this->textBoxPIN->Name = L"textBoxPIN";
+			this->textBoxPIN->Size = System::Drawing::Size(127, 20);
+			this->textBoxPIN->TabIndex = 8;
+			this->textBoxPIN->TextChanged += gcnew System::EventHandler(this, &MyForm::textBoxPIN_TextChanged_1);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::SystemColors::Window;
 			this->ClientSize = System::Drawing::Size(315, 359);
+			this->Controls->Add(this->textBoxPIN);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->buttonRegi);
 			this->Controls->Add(this->textBoxPWORD);
 			this->Controls->Add(this->textBoxUNAME);
@@ -250,9 +282,9 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	con->Open();
 
 	//create query for login credential verification
-	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name) AND user_password=(@user_password)", con);
+	SqlCommand^ cmd = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name) AND user_password=(@user_password) AND identity_pin=(@identity_pin)", con);
 
-	//make sure eusername is not empty
+	//make sure username is not empty
 	if (String::IsNullOrEmpty(textBoxUNAME->Text))
 	{
 		MessageBox::Show("Error. Username field cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
@@ -264,10 +296,17 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		MessageBox::Show("Error. Password field cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		//con->Close();
 	}
+	//make sure pin field is not empty
+	else if (String::IsNullOrEmpty(textBoxPIN->Text))
+	{
+		MessageBox::Show("Error. Identity Pin field cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		//con->Close();
+	}
 
 	/******passing sql query values by parameter because concatenated sql queries are vulnerable to sql injection attacks******/
 	cmd->Parameters->AddWithValue("@user_name", textBoxUNAME->Text);
 	cmd->Parameters->AddWithValue("@user_password", textBoxPWORD->Text);
+	cmd->Parameters->AddWithValue("@identity_pin", textBoxPIN->Text);
 
 	cmd->ExecuteNonQuery(); //execute command
 	SqlDataReader^ rd = cmd->ExecuteReader(); 
@@ -287,20 +326,23 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		//for security clearing crendtial textboxes incase a return to the login screen occurs after successful login
 		textBoxUNAME->Clear();
 		textBoxPWORD->Clear();
+		textBoxPIN->Clear();
 	}
 	else {
-		MessageBox::Show("Wrong Username or Password. Login Attempt Failed");
+		MessageBox::Show("Login Attempt Failed.");
 		rd->Close();
 		con->Close();
 
 		//clearing credential textboxes
 		textBoxUNAME->Clear();
 		textBoxPWORD->Clear();
+		textBoxPIN->Clear();
 	}
 
 	//clearing credential textboxes
 	textBoxUNAME->Clear();
 	textBoxPWORD->Clear();
+	textBoxPIN->Clear();
 
 	rd->Close();
 	con->Close();
@@ -310,6 +352,8 @@ private: System::Void textBoxPWORD_TextChanged(System::Object^ sender, System::E
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 
 
+}
+private: System::Void textBoxPIN_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

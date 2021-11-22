@@ -18,6 +18,7 @@ namespace GUIpractice {
 	private:
 		String^ username;
 		DateTime localDate = DateTime::Now;
+		/*****where is datestring used*****/
 		String^ dateString = localDate.ToString("MM/dd/yyyy");
 	public:
 		Add_Expense(void)
