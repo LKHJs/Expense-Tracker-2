@@ -313,7 +313,7 @@ namespace GUIpractice {
 		}
 	}
 private: System::Void DataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
-
+	
 	
 
 }
