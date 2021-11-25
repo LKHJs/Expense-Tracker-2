@@ -2,6 +2,7 @@
 #include "Forgot_Password.h"
 #include "Register_Form.h"
 #include "MainHub.h"
+#include <regex>
 
 namespace GUIpractice {
 	using namespace System;
@@ -329,7 +330,7 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 		textBoxPIN->Clear();
 	}
 	else {
-		MessageBox::Show("Login Attempt Failed.");
+		MessageBox::Show("One or More Credentials Incorrect.\n\n Login Attempt Failed.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		rd->Close();
 		con->Close();
 
@@ -347,13 +348,16 @@ private: System::Void buttonLogin_Click(System::Object^ sender, System::EventArg
 	rd->Close();
 	con->Close();
 }
+
 private: System::Void textBoxPWORD_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 
 
 }
+
 private: System::Void textBoxPIN_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
+	
 }
 };
 }

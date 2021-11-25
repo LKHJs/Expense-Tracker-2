@@ -20,7 +20,9 @@ namespace GUIpractice {
 	{
 	private:
 		String^ username;
-		// Create table to be used
+	private: System::Windows::Forms::RadioButton^ sortCurrMonth;
+
+		   // Create table to be used
 		DataTable^ table = gcnew DataTable();
 
 
@@ -84,7 +86,7 @@ namespace GUIpractice {
 
 	private: System::Windows::Forms::RadioButton^ sortLastMonth;
 
-	private: System::Windows::Forms::RadioButton^ sortLastWeek;
+
 
 
 	protected:
@@ -109,10 +111,10 @@ namespace GUIpractice {
 			this->deleteExp = (gcnew System::Windows::Forms::Button());
 			this->updateExp = (gcnew System::Windows::Forms::Button());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->sortCurrMonth = (gcnew System::Windows::Forms::RadioButton());
 			this->sort6Months = (gcnew System::Windows::Forms::RadioButton());
 			this->sort3Months = (gcnew System::Windows::Forms::RadioButton());
 			this->sortLastMonth = (gcnew System::Windows::Forms::RadioButton());
-			this->sortLastWeek = (gcnew System::Windows::Forms::RadioButton());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
@@ -140,7 +142,7 @@ namespace GUIpractice {
 			// 
 			// addExpButton
 			// 
-			this->addExpButton->Location = System::Drawing::Point(456, 35);
+			this->addExpButton->Location = System::Drawing::Point(456, 59);
 			this->addExpButton->Margin = System::Windows::Forms::Padding(2);
 			this->addExpButton->Name = L"addExpButton";
 			this->addExpButton->Size = System::Drawing::Size(96, 23);
@@ -162,7 +164,7 @@ namespace GUIpractice {
 			// 
 			// deleteExp
 			// 
-			this->deleteExp->Location = System::Drawing::Point(456, 58);
+			this->deleteExp->Location = System::Drawing::Point(456, 95);
 			this->deleteExp->Margin = System::Windows::Forms::Padding(2);
 			this->deleteExp->Name = L"deleteExp";
 			this->deleteExp->Size = System::Drawing::Size(96, 23);
@@ -173,7 +175,7 @@ namespace GUIpractice {
 			// 
 			// updateExp
 			// 
-			this->updateExp->Location = System::Drawing::Point(456, 82);
+			this->updateExp->Location = System::Drawing::Point(456, 133);
 			this->updateExp->Margin = System::Windows::Forms::Padding(2);
 			this->updateExp->Name = L"updateExp";
 			this->updateExp->Size = System::Drawing::Size(96, 26);
@@ -184,20 +186,32 @@ namespace GUIpractice {
 			// 
 			// panel1
 			// 
+			this->panel1->Controls->Add(this->sortCurrMonth);
 			this->panel1->Controls->Add(this->sort6Months);
 			this->panel1->Controls->Add(this->sort3Months);
 			this->panel1->Controls->Add(this->sortLastMonth);
-			this->panel1->Controls->Add(this->sortLastWeek);
-			this->panel1->Location = System::Drawing::Point(456, 130);
+			this->panel1->Location = System::Drawing::Point(456, 176);
 			this->panel1->Margin = System::Windows::Forms::Padding(2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(132, 90);
+			this->panel1->Size = System::Drawing::Size(132, 84);
 			this->panel1->TabIndex = 6;
+			// 
+			// sortCurrMonth
+			// 
+			this->sortCurrMonth->AutoSize = true;
+			this->sortCurrMonth->Location = System::Drawing::Point(2, 3);
+			this->sortCurrMonth->Name = L"sortCurrMonth";
+			this->sortCurrMonth->Size = System::Drawing::Size(128, 17);
+			this->sortCurrMonth->TabIndex = 4;
+			this->sortCurrMonth->TabStop = true;
+			this->sortCurrMonth->Text = L"Sort by Current Month";
+			this->sortCurrMonth->UseVisualStyleBackColor = true;
+			this->sortCurrMonth->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sortCurrMonth_CheckedChanged);
 			// 
 			// sort6Months
 			// 
 			this->sort6Months->AutoSize = true;
-			this->sort6Months->Location = System::Drawing::Point(2, 66);
+			this->sort6Months->Location = System::Drawing::Point(2, 65);
 			this->sort6Months->Margin = System::Windows::Forms::Padding(2);
 			this->sort6Months->Name = L"sort6Months";
 			this->sort6Months->Size = System::Drawing::Size(128, 17);
@@ -211,7 +225,7 @@ namespace GUIpractice {
 			// 
 			this->sort3Months->AllowDrop = true;
 			this->sort3Months->AutoSize = true;
-			this->sort3Months->Location = System::Drawing::Point(2, 47);
+			this->sort3Months->Location = System::Drawing::Point(2, 44);
 			this->sort3Months->Margin = System::Windows::Forms::Padding(2);
 			this->sort3Months->Name = L"sort3Months";
 			this->sort3Months->Size = System::Drawing::Size(128, 17);
@@ -224,7 +238,7 @@ namespace GUIpractice {
 			// sortLastMonth
 			// 
 			this->sortLastMonth->AutoSize = true;
-			this->sortLastMonth->Location = System::Drawing::Point(2, 28);
+			this->sortLastMonth->Location = System::Drawing::Point(2, 23);
 			this->sortLastMonth->Margin = System::Windows::Forms::Padding(2);
 			this->sortLastMonth->Name = L"sortLastMonth";
 			this->sortLastMonth->Size = System::Drawing::Size(114, 17);
@@ -233,19 +247,6 @@ namespace GUIpractice {
 			this->sortLastMonth->Text = L"Sort by Last Month";
 			this->sortLastMonth->UseVisualStyleBackColor = true;
 			this->sortLastMonth->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sortLastMonth_CheckedChanged);
-			// 
-			// sortLastWeek
-			// 
-			this->sortLastWeek->AutoSize = true;
-			this->sortLastWeek->Location = System::Drawing::Point(2, 10);
-			this->sortLastWeek->Margin = System::Windows::Forms::Padding(2);
-			this->sortLastWeek->Name = L"sortLastWeek";
-			this->sortLastWeek->Size = System::Drawing::Size(113, 17);
-			this->sortLastWeek->TabIndex = 0;
-			this->sortLastWeek->TabStop = true;
-			this->sortLastWeek->Text = L"Sort by Last Week";
-			this->sortLastWeek->UseVisualStyleBackColor = true;
-			this->sortLastWeek->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sortLastWeek_CheckedChanged);
 			// 
 			// MainHub
 			// 
@@ -280,7 +281,7 @@ namespace GUIpractice {
 	}
 	private: System::Void addExpButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		Add_Expense^ addExpForm = gcnew Add_Expense(username); // Creates next form.
-		this->Hide(); // Hides current form.
+		//this->Hide(); // Hides current form.
 		addExpForm->ShowDialog(); // Displays next form
 		// Updates Table after change.
 		table->Clear();
@@ -299,6 +300,7 @@ namespace GUIpractice {
 		con->Close();
 		this->Show(); // Displays current form.
 	}
+		   //refresh button 
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 	table->Clear();
 	dataGridView1->DataSource = 0;
@@ -348,6 +350,7 @@ private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^
 
 private: System::Void listBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 }
+	   //sorting by the last month
 private: System::Void sortLastMonth_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	table->Clear();
 	dataGridView1->DataSource = 0;
@@ -357,7 +360,7 @@ private: System::Void sortLastMonth_CheckedChanged(System::Object^ sender, Syste
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY DATEPART(month, expense_date) DESC", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-1,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -366,8 +369,26 @@ private: System::Void sortLastMonth_CheckedChanged(System::Object^ sender, Syste
 	// Closes connection
 	con->Close();
 }
+	   //sorting by last 6 months
 private: System::Void sort6Months_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Updates Table after change.
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-6,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
+	// Closes connection
+	con->Close();
 }
+	   //sorting by last 3 motnhs
 private: System::Void sort3Months_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	table->Clear();
 	dataGridView1->DataSource = 0;
@@ -377,7 +398,7 @@ private: System::Void sort3Months_CheckedChanged(System::Object^ sender, System:
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY DATEPART(quarter, expense_date) DESC", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-3,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -386,7 +407,7 @@ private: System::Void sort3Months_CheckedChanged(System::Object^ sender, System:
 	// Closes connection
 	con->Close();
 }
-private: System::Void sortLastWeek_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void sortCurrMonth_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	table->Clear();
 	dataGridView1->DataSource = 0;
 	// Updates Table after change.
@@ -395,7 +416,7 @@ private: System::Void sortLastWeek_CheckedChanged(System::Object^ sender, System
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY DATEPART(week, expense_date) DESC", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-1,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date >= DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
