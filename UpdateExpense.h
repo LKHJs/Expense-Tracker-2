@@ -18,7 +18,6 @@ namespace GUIpractice {
 	private:
 		String^ username;
 		DateTime localDate = DateTime::Now;
-		/*******When and where is datestring used?*******/
 		String^ dateString = localDate.ToString("MM/dd/yyyy");
 		// Create table to be used
 		DataTable^ table = gcnew DataTable();

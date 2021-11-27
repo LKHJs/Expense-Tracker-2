@@ -18,7 +18,6 @@ namespace GUIpractice {
 	private:
 		String^ username;
 		DateTime localDate = DateTime::Now;
-		/*****where is datestring used*****/
 		String^ dateString = localDate.ToString("MM/dd/yyyy");
 	public:
 		Add_Expense(void)
@@ -184,7 +183,7 @@ namespace GUIpractice {
 			// comboBox1 Category list
 			// 
 			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"General ", L"Transportation", L"Personal", L"Buisness" });
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"General ", L"Transportation", L"Personal", L"Business" });
 			this->comboBox1->Location = System::Drawing::Point(16, 165);
 			this->comboBox1->Name = L"comboBox1";
 			this->comboBox1->Size = System::Drawing::Size(197, 21);

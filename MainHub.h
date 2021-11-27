@@ -21,6 +21,7 @@ namespace GUIpractice {
 	private:
 		String^ username;
 	private: System::Windows::Forms::RadioButton^ sortCurrMonth;
+	private: System::Windows::Forms::ComboBox^ comboBox1;
 
 		   // Create table to be used
 		DataTable^ table = gcnew DataTable();
@@ -45,7 +46,7 @@ namespace GUIpractice {
 			con->Open();
 
 			// Gets desired data for table
-			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY expense_date DESC", con);
 			adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 			
 			// Fills table with desired data
@@ -115,6 +116,7 @@ namespace GUIpractice {
 			this->sort6Months = (gcnew System::Windows::Forms::RadioButton());
 			this->sort3Months = (gcnew System::Windows::Forms::RadioButton());
 			this->sortLastMonth = (gcnew System::Windows::Forms::RadioButton());
+			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->panel1->SuspendLayout();
 			this->SuspendLayout();
@@ -125,7 +127,7 @@ namespace GUIpractice {
 			this->dataGridView1->Location = System::Drawing::Point(12, 35);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersWidth = 51;
-			this->dataGridView1->Size = System::Drawing::Size(439, 225);
+			this->dataGridView1->Size = System::Drawing::Size(439, 268);
 			this->dataGridView1->TabIndex = 0;
 			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &MainHub::dataGridView1_CellContentClick);
 			// 
@@ -153,7 +155,7 @@ namespace GUIpractice {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(188, 266);
+			this->button2->Location = System::Drawing::Point(181, 308);
 			this->button2->Margin = System::Windows::Forms::Padding(2);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(105, 23);
@@ -248,11 +250,23 @@ namespace GUIpractice {
 			this->sortLastMonth->UseVisualStyleBackColor = true;
 			this->sortLastMonth->CheckedChanged += gcnew System::EventHandler(this, &MainHub::sortLastMonth_CheckedChanged);
 			// 
+			// comboBox1
+			// 
+			this->comboBox1->FormattingEnabled = true;
+			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Personal", L"General", L"Transportation", L"Business" });
+			this->comboBox1->Location = System::Drawing::Point(456, 265);
+			this->comboBox1->Name = L"comboBox1";
+			this->comboBox1->Size = System::Drawing::Size(130, 21);
+			this->comboBox1->TabIndex = 7;
+			this->comboBox1->Text = L"Sort by Category";
+			this->comboBox1->SelectedIndexChanged += gcnew System::EventHandler(this, &MainHub::comboBox1_SelectedIndexChanged);
+			// 
 			// MainHub
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(589, 335);
+			this->ClientSize = System::Drawing::Size(592, 351);
+			this->Controls->Add(this->comboBox1);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->updateExp);
 			this->Controls->Add(this->deleteExp);
@@ -310,7 +324,7 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY expense_date DESC", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -337,7 +351,7 @@ private: System::Void updateExp_Click(System::Object^ sender, System::EventArgs^
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name)", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY expense_date DESC", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -360,7 +374,7 @@ private: System::Void sortLastMonth_CheckedChanged(System::Object^ sender, Syste
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-1,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-1,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0) ORDER BY expense_date DESC", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -379,7 +393,7 @@ private: System::Void sort6Months_CheckedChanged(System::Object^ sender, System:
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-6,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-6,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0) ORDER BY expense_date DESC", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -398,7 +412,7 @@ private: System::Void sort3Months_CheckedChanged(System::Object^ sender, System:
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-3,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-3,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date < DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0) ORDER BY expense_date DESC", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -410,13 +424,12 @@ private: System::Void sort3Months_CheckedChanged(System::Object^ sender, System:
 private: System::Void sortCurrMonth_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	table->Clear();
 	dataGridView1->DataSource = 0;
-	// Updates Table after change.
-	// Connects to server
+	
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
 
 	// Gets desired data for table
-	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-1,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date >= DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)", con);
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_date >= DATEADD(month,-1,DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0)) AND expense_date >= DATEADD(month,DATEDIFF(month,0,CURRENT_TIMESTAMP),0) ORDER BY expense_date DESC", con);
 	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 
 	// Fills table with desired data
@@ -424,6 +437,91 @@ private: System::Void sortCurrMonth_CheckedChanged(System::Object^ sender, Syste
 	dataGridView1->DataSource = table;
 	// Closes connection
 	con->Close();
+}
+private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	/*sorting by personal*/
+	if (comboBox1->SelectedItem == "Personal") {
+		table->Clear();
+		dataGridView1->DataSource = 0;
+		// Updates Table after change.
+		// Connects to server
+		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+		con->Open();
+
+		// Gets desired data for table
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_attribute = (@expense_attribute) ORDER BY expense_date DESC", con);
+		adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+		adapter->SelectCommand->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedItem);
+
+		// Fills table with desired data
+		adapter->Fill(table);
+		dataGridView1->DataSource = table;
+		// Closes connection
+		con->Close();
+	}
+
+	/*sorting by Business*/
+	if (comboBox1->SelectedItem == "Business") {
+		table->Clear();
+		dataGridView1->DataSource = 0;
+		// Updates Table after change.
+		// Connects to server
+		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+		con->Open();
+
+		// Gets desired data for table
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_attribute = (@expense_attribute) ORDER BY expense_date DESC", con);
+		adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+		adapter->SelectCommand->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedItem);
+
+		// Fills table with desired data
+		adapter->Fill(table);
+		dataGridView1->DataSource = table;
+		// Closes connection
+		con->Close();
+	}
+
+	/*sorting by General*/
+	if (comboBox1->SelectedItem == "General") {
+		table->Clear();
+		dataGridView1->DataSource = 0;
+		// Updates Table after change.
+		// Connects to server
+		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+		con->Open();
+
+		// Gets desired data for table
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_attribute = (@expense_attribute) ORDER BY expense_date DESC", con);
+		adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+		adapter->SelectCommand->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedItem);
+
+		// Fills table with desired data
+		adapter->Fill(table);
+		dataGridView1->DataSource = table;
+		// Closes connection
+		con->Close();
+	}
+
+	/*sorting by Transportation*/
+	if (comboBox1->SelectedItem == "Transportation") {
+		table->Clear();
+		dataGridView1->DataSource = 0;
+		// Updates Table after change.
+		// Connects to server
+		SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+		con->Open();
+
+		// Gets desired data for table
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) AND expense_attribute = (@expense_attribute) ORDER BY expense_date DESC", con);
+		adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+		adapter->SelectCommand->Parameters->AddWithValue("@expense_attribute", comboBox1->SelectedItem);
+
+		// Fills table with desired data
+		adapter->Fill(table);
+		dataGridView1->DataSource = table;
+		// Closes connection
+		con->Close();
+	}
 }
 };
 }
