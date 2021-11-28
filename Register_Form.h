@@ -214,6 +214,7 @@ namespace GUIpractice {
 			this->textBox5->Size = System::Drawing::Size(170, 20);
 			this->textBox5->TabIndex = 12;
 			this->textBox5->TextChanged += gcnew System::EventHandler(this, &Register_Form::textBox5_TextChanged);
+			this->textBox5->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Register_Form::textBox5_KeyPress);
 			// 
 			// label3
 			// 
@@ -233,6 +234,7 @@ namespace GUIpractice {
 			this->textBox6->Size = System::Drawing::Size(170, 20);
 			this->textBox6->TabIndex = 14;
 			this->textBox6->TextChanged += gcnew System::EventHandler(this, &Register_Form::textBox6_TextChanged);
+			this->textBox6->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Register_Form::textBox6_KeyPress);
 			// 
 			// Register_Form
 			// 
@@ -351,6 +353,30 @@ private: System::Void textBox5_TextChanged(System::Object^ sender, System::Event
 }
 private: System::Void textBox6_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 
+}
+private: System::Void textBox5_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	//Textbox accepts numbers only
+	if (e->KeyChar == '.') {
+		if (this->textBox5->Text->Contains(".") && !this->textBox5->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits ".", "-" and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
+}
+private: System::Void textBox6_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	//Textbox accepts numbers only
+	if (e->KeyChar == '.') {
+		if (this->textBox6->Text->Contains(".") && !this->textBox6->SelectedText->Contains("."))
+			e->Handled = true;
+	}
+
+	// Accept only digits ".", "-" and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
 }
 };
 }

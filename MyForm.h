@@ -212,7 +212,7 @@ namespace GUIpractice {
 			this->textBoxPIN->Name = L"textBoxPIN";
 			this->textBoxPIN->Size = System::Drawing::Size(127, 20);
 			this->textBoxPIN->TabIndex = 8;
-			this->textBoxPIN->TextChanged += gcnew System::EventHandler(this, &MyForm::textBoxPIN_TextChanged_1);
+			this->textBoxPIN->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBoxPIN_KeyPress);
 			// 
 			// MyForm
 			// 
@@ -355,9 +355,17 @@ private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) 
 
 
 }
-
-private: System::Void textBoxPIN_TextChanged_1(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void textBoxPIN_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+	//Textbox accepts numbers only
+	if (e->KeyChar == '.') {
+		if (this->textBoxPIN->Text->Contains(".") && !this->textBoxPIN->SelectedText->Contains("."))
+			e->Handled = true;
+	}
 	
+	// Accept only digits ".", "-" and the Backspace character
+	else if (!Char::IsDigit(e->KeyChar) && e->KeyChar != 0x08) {
+		e->Handled = true;
+	}
 }
 };
 }

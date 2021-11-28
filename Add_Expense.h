@@ -136,13 +136,12 @@ namespace GUIpractice {
 			this->label3->TabIndex = 4;
 			this->label3->Text = L"Category: ";
 			// 
-			// textBox4 Date Field
+			// textBox4
 			// 
 			this->textBox4->Location = System::Drawing::Point(16, 212);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(197, 20);
 			this->textBox4->TabIndex = 6;
-			this->textBox4->Text = dateString;
 			this->textBox4->TextChanged += gcnew System::EventHandler(this, &Add_Expense::textBox4_TextChanged);
 			// 
 			// label4
@@ -156,7 +155,7 @@ namespace GUIpractice {
 			this->label4->TabIndex = 7;
 			this->label4->Text = L"Date Created:";
 			// 
-			// button1 Submit 
+			// button1
 			// 
 			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -168,7 +167,7 @@ namespace GUIpractice {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &Add_Expense::Button1_Click);
 			// 
-			// button2 Cancel
+			// button2
 			// 
 			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -180,7 +179,7 @@ namespace GUIpractice {
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &Add_Expense::Button2_Click);
 			// 
-			// comboBox1 Category list
+			// comboBox1
 			// 
 			this->comboBox1->FormattingEnabled = true;
 			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"General ", L"Transportation", L"Personal", L"Business" });
@@ -262,5 +261,6 @@ private: System::Void comboBox1_SelectedIndexChanged(System::Object^ sender, Sys
 }
 private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
+
 };
 }
