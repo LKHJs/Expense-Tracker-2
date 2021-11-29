@@ -334,8 +334,26 @@ private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e
 
 	   //Delete Expense BUtton Click Event Handler 
 private: System::Void deleteExp_Click(System::Object^ sender, System::EventArgs^ e) {
-	DeleteExpense^ delExpFrm = gcnew DeleteExpense;
+	DeleteExpense^ delExpFrm = gcnew DeleteExpense(username);
+	this->Hide();
 	delExpFrm->ShowDialog();
+	// Updates Table after change.
+	table->Clear();
+	dataGridView1->DataSource = 0;
+	// Connects to server
+	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
+	con->Open();
+
+	// Gets desired data for table
+	SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY expense_date DESC", con);
+	adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
+
+	// Fills table with desired data
+	adapter->Fill(table);
+	dataGridView1->DataSource = table;
+	// Closes connection
+	con->Close();
+	this->Show(); // Displays current form.
 }
 
 	   //Update Expense BUtton Click Event Handler 
