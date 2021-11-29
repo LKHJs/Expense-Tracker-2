@@ -216,41 +216,62 @@ namespace GUIpractice {
 		Form::Close();
 	}
 private: System::Void Button1_Click(System::Object^ sender, System::EventArgs^ e) {
+
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();
-	//////////////Insert data into table///////////////
-	SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense2(expense_name,expense_amount,expense_attribute,expense_date, user_name)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date,@user_name)", con);
-	
-	//make sure expense data has atleast a name
-	if (String::IsNullOrEmpty(textBox1->Text))
+
+
+	//sql command to check if expense name alreadt exists
+	SqlCommand^ uniqueEXPCHECK = gcnew SqlCommand("SELECT * FROM expense2 WHERE expense_name=(@expense_name);", con);
+	uniqueEXPCHECK->Parameters->AddWithValue("@expense_name", textBox1->Text);
+	SqlDataReader^ expCheck = uniqueEXPCHECK->ExecuteReader();
+	//if username exists = error
+	if (expCheck->HasRows) {
+		MessageBox::Show("Expense Already Exists!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		expCheck->Close();
+		con->Close();
+	}
+	//otherwise proceed with connection and query calls
+	else
 	{
-		MessageBox::Show("Error. Expense name cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		//con->Close();
-	}
+		expCheck->Close(); //close previous datareader from expcheck
+		//////////////Insert data into table///////////////
+		SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO expense2(expense_name,expense_amount,expense_attribute,expense_date, user_name)VALUES(@expense_name,@expense_amount,@expense_attribute,@expense_date,@user_name)", con);
 
-	cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
-	cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
-	cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Text);
-	cmd->Parameters->AddWithValue("@user_name", username);
+		//make sure expense data has atleast a name
+		if (String::IsNullOrEmpty(textBox1->Text))
+		{
+			MessageBox::Show("Error. Expense name cannot be empty.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			//con->Close();
+		}
 
-	//converting expense date to sql readable date
-	DateTime expenseDate = DateTime::Parse(this->textBox4->Text);
-	cmd->Parameters->AddWithValue("@expense_date", expenseDate);
+		cmd->Parameters->AddWithValue("@expense_name", textBox1->Text);
+		cmd->Parameters->AddWithValue("@expense_amount", textBox2->Text);
+		cmd->Parameters->AddWithValue("@expense_attribute", comboBox1->Text);
+		cmd->Parameters->AddWithValue("@user_name", username);
 
-	SqlDataReader^ rd = cmd->ExecuteReader();
-	//if registration is successful
-	if (rd->RecordsAffected) {
-		MessageBox::Show("Expense Updated!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		//transition back to login form
-		Form::Close();
-		rd->Close();
-		con->Close();
-	}
-	else {
-		//if query or connection fail
-		MessageBox::Show("Error. Query Connection Failed", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		rd->Close();
-		con->Close();
+		//converting expense date to sql readable date
+		DateTime expenseDate = DateTime::Parse(this->textBox4->Text);
+		cmd->Parameters->AddWithValue("@expense_date", expenseDate);
+
+
+
+
+		SqlDataReader^ rd = cmd->ExecuteReader();
+		//if registration is successful
+		if (rd->RecordsAffected) {
+			MessageBox::Show("Expense Added!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			//transition back to login form
+			Form::Close();
+			rd->Close();
+			con->Close();
+		}
+		else {
+			//if query or connection fail
+			MessageBox::Show("Error. Query Connection Failed", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			rd->Close();
+			con->Close();
+		}
 	}
 
 }
