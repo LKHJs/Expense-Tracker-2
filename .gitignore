@@ -338,3 +338,12 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/GroupUpdateExpense.h
+/GroupUpdateExpense.cpp
+/GroupMainHub.resx
+/GroupMainHub.h
+/GroupMainHub.cpp
+/GroupDeleteExpense.h
+/GroupDeleteExpense.cpp
+/GroupAdd_Expense.h
+/GroupAdd_Expense.cpp

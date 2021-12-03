@@ -46,7 +46,7 @@ namespace GUIpractice {
 			con->Open();
 
 			// Gets desired data for table
-			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT * FROM expense2 WHERE user_name=(@user_name) ORDER BY expense_date DESC", con);
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter("SELECT expense_name, expense_amount, expense_attribute, expense_date FROM expense2 WHERE user_name='" + username + "' ORDER BY expense_date DESC", con);
 			adapter->SelectCommand->Parameters->AddWithValue("@user_name", username);
 			
 			// Fills table with desired data
@@ -316,9 +316,9 @@ namespace GUIpractice {
 	}
 		   //refresh button 
 private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+	// Updates Table after change.
 	table->Clear();
 	dataGridView1->DataSource = 0;
-	// Updates Table after change.
 	// Connects to server
 	SqlConnection^ con = gcnew  SqlConnection("Data Source=72.180.160.215,1433;Initial Catalog=expTrackerApp;Persist Security Info=True;User ID=3340project;Password=expensetracker");
 	con->Open();

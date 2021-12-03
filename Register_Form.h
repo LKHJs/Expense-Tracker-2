@@ -23,6 +23,9 @@ namespace GUIpractice {
 			//
 			//TODO: Add the constructor code here
 			//
+			//max pin characters in text field
+			textBox5->MaxLength = 4;
+			textBox6->MaxLength = 4;
 		}
 
 
@@ -297,55 +300,59 @@ private: System::Void textBox1_TextChanged(System::Object^ sender, System::Event
 		}
 
 		//checking if passwords match
-		if (textBox3->Text != textBox2->Text) {
+		else if (textBox3->Text != textBox2->Text) {
 			MessageBox::Show("Error. Passwords don't match.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
 		//checking if pins match
-		if (textBox6->Text != textBox5->Text) {
+		else if (textBox6->Text != textBox5->Text) {
 			MessageBox::Show("Error. 4 digit Identity Pins do not match.", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
-		//sql command to check if username exists
-		SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name);", con);
-		uniqueUSRCHECK->Parameters->AddWithValue("@user_name", textBox1->Text);
-		SqlDataReader^ usrCheck = uniqueUSRCHECK->ExecuteReader();
-		//if username exists = error
-		if (usrCheck->HasRows) {
-			MessageBox::Show("Username Already Exists!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			usrCheck->Close();
-			con->Close();
-		}
-		//otherwise proceed with connection and query calls
 		else {
-			usrCheck->Close(); //close previous datareader from usercheck
-			if (this->textBox2->Text == this->textBox3->Text)
-			{
-				SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,identity_pin,security_answer)VALUES(@user_name,@user_password,@identity_pin,@security_answer)", con);
-
-				cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
-				cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
-				cmd->Parameters->AddWithValue("@identity_pin", textBox5->Text);
-				cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
-
-				SqlDataReader^ rd = cmd->ExecuteReader();
-				//if registration is successful
-				if (rd->RecordsAffected) {
-					MessageBox::Show("Registration Successful!");
-					//transition back to login form
-					Form::Close();
-					rd->Close();
-					con->Close();
-				}
-				else {
-					//if query or connection fail
-					MessageBox::Show("Error. Query Connection Failed");
-					rd->Close();
-					con->Close();
-				}
+			//sql command to check if username exists
+			SqlCommand^ uniqueUSRCHECK = gcnew SqlCommand("SELECT * FROM app_user WHERE user_name=(@user_name);", con);
+			uniqueUSRCHECK->Parameters->AddWithValue("@user_name", textBox1->Text);
+			SqlDataReader^ usrCheck = uniqueUSRCHECK->ExecuteReader();
+			//if username exists = error
+			if (usrCheck->HasRows) {
+				MessageBox::Show("Username Already Exists!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				usrCheck->Close();
+				con->Close();
 			}
-			
+			//otherwise proceed with connection and query calls
+			else {
+				usrCheck->Close(); //close previous datareader from usercheck
+				if (this->textBox2->Text == this->textBox3->Text)
+				{
+					SqlCommand^ cmd = gcnew SqlCommand("INSERT INTO app_user(user_name,user_password,identity_pin,security_answer)VALUES(@user_name,@user_password,@identity_pin,@security_answer)", con);
+
+					cmd->Parameters->AddWithValue("@user_name", textBox1->Text);
+					cmd->Parameters->AddWithValue("@user_password", textBox2->Text);
+					cmd->Parameters->AddWithValue("@identity_pin", textBox5->Text);
+					cmd->Parameters->AddWithValue("@security_answer", textBox4->Text);
+
+					SqlDataReader^ rd = cmd->ExecuteReader();
+					//if registration is successful
+					if (rd->RecordsAffected) {
+						MessageBox::Show("Registration Successful!");
+						//transition back to login form
+						Form::Close();
+						rd->Close();
+						con->Close();
+					}
+					else {
+						//if query or connection fail
+						MessageBox::Show("Error. Query Connection Failed");
+						rd->Close();
+						con->Close();
+					}
+				}
+
+			}
 		}
+
+		
 }
 private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
